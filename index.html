@@ -1,459 +1,654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saraf Day</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Saraf Day</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: "Comic Sans MS", "Trebuchet MS", cursive;
-      background: linear-gradient(135deg, #ffb3ec, #b3e5ff, #fff3a3, #caffbf);
-      color: #3b2350;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+  background: linear-gradient(135deg, #ffb3ec, #b3e5ff, #fff3a3, #caffbf);
+  color: #3b2350;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
-    .page {
-      display: none;
-      min-height: 100vh;
-      padding: 30px 18px;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
-    }
+.page {
+  display: none;
+  min-height: 100vh;
+  padding: 30px 18px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+}
 
-    .page.active { display: flex; }
+.page.active { display: flex; }
 
-    .card {
-      background: rgba(255,255,255,0.85);
-      border: 4px dashed #ff69b4;
-      border-radius: 30px;
-      padding: 28px;
-      max-width: 720px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    }
+.card {
+  background: rgba(255,255,255,0.88);
+  border: 4px dashed #ff69b4;
+  border-radius: 30px;
+  padding: 28px;
+  max-width: 760px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  z-index: 2;
+}
 
-    h1 {
-      font-size: clamp(2.3rem, 8vw, 5rem);
-      margin: 0 0 12px;
-      color: #ff1493;
-      text-shadow: 3px 3px #fff176, 6px 6px #7bdff2;
-    }
+h1 {
+  font-size: clamp(2.2rem, 8vw, 5rem);
+  margin: 0 0 12px;
+  color: #ff1493;
+  text-shadow: 3px 3px #fff176, 6px 6px #7bdff2;
+}
 
-    h2 {
-      font-size: clamp(1.8rem, 6vw, 3.2rem);
-      color: #7b2cbf;
-      margin: 0 0 16px;
-    }
+h2 {
+  font-size: clamp(1.8rem, 6vw, 3.2rem);
+  color: #7b2cbf;
+  margin: 0 0 16px;
+}
 
-    p {
-      font-size: 1.25rem;
-      line-height: 1.45;
-    }
+p {
+  font-size: 1.22rem;
+  line-height: 1.45;
+}
 
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 15px 24px;
-      margin: 10px;
-      font-size: 1.05rem;
-      font-weight: bold;
-      cursor: pointer;
-      background: linear-gradient(90deg, #ff8fab, #ffd166, #90dbf4);
-      color: #3b2350;
-      box-shadow: 0 6px 0 #c9184a;
-      transition: transform 0.15s;
-    }
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 15px 24px;
+  margin: 10px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff8fab, #ffd166, #90dbf4);
+  color: #3b2350;
+  box-shadow: 0 6px 0 #c9184a;
+  transition: transform 0.15s;
+}
 
-    button:hover { transform: scale(1.06) rotate(-1deg); }
-    button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
+button:hover { transform: scale(1.06) rotate(-1deg); }
+button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
 
-    .tiny {
-      font-size: 0.95rem;
-      opacity: 0.8;
-    }
+.tiny { font-size: 0.95rem; opacity: 0.8; }
 
-    .balloon {
-      position: fixed;
-      bottom: -120px;
-      font-size: 3rem;
-      animation: floatUp 9s linear infinite;
-      z-index: 0;
-      pointer-events: none;
-    }
+.note {
+  background: #fff9c4;
+  border: 3px dotted #ff69b4;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  display: none;
+  white-space: pre-line;
+}
 
-    @keyframes floatUp {
-      from { transform: translateY(0) rotate(0deg); opacity: 0.9; }
-      to { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
-    }
+.progress {
+  background: #ffe5ec;
+  border: 3px solid #ff69b4;
+  border-radius: 999px;
+  height: 26px;
+  overflow: hidden;
+  margin: 18px 0;
+}
 
-    .cake {
-      position: relative;
-      width: 290px;
-      height: 220px;
-      margin: 25px auto;
-    }
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff1493, #ffd166, #06d6a0, #90dbf4);
+  transition: width 0.4s ease;
+}
 
-    .cake-base {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 120px;
-      background: #ff8fab;
-      border-radius: 25px 25px 40px 40px;
-      border: 6px solid #fff;
-      box-shadow: inset 0 -15px #ff5d8f;
-    }
+.balloon {
+  position: fixed;
+  bottom: -120px;
+  font-size: 3rem;
+  animation: floatUp 9s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
 
-    .cake-top {
-      position: absolute;
-      bottom: 105px;
-      left: 30px;
-      width: 230px;
-      height: 65px;
-      background: #fff3a3;
-      border-radius: 30px;
-      border: 6px solid #fff;
-    }
+@keyframes floatUp {
+  from { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+  to { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+}
 
-    .candle {
-      position: absolute;
-      bottom: 165px;
-      width: 24px;
-      height: 65px;
-      background: repeating-linear-gradient(
-        45deg,
-        #7bdff2,
-        #7bdff2 8px,
-        #fff 8px,
-        #fff 16px
-      );
-      border-radius: 10px;
-      cursor: pointer;
-    }
+.cake {
+  position: relative;
+  width: 290px;
+  height: 220px;
+  margin: 25px auto;
+}
 
-    .candle:nth-child(1) { left: 75px; }
-    .candle:nth-child(2) { left: 133px; }
-    .candle:nth-child(3) { left: 191px; }
+.cake-base {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 120px;
+  background: #ff8fab;
+  border-radius: 25px 25px 40px 40px;
+  border: 6px solid #fff;
+  box-shadow: inset 0 -15px #ff5d8f;
+}
 
-    .flame {
-      position: absolute;
-      top: -27px;
-      left: 2px;
-      width: 20px;
-      height: 28px;
-      background: #ffbe0b;
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      animation: flicker 0.4s infinite alternate;
-    }
+.cake-top {
+  position: absolute;
+  bottom: 105px;
+  left: 30px;
+  width: 230px;
+  height: 65px;
+  background: #fff3a3;
+  border-radius: 30px;
+  border: 6px solid #fff;
+}
 
-    @keyframes flicker {
-      from { transform: rotate(-45deg) scale(1); }
-      to { transform: rotate(-45deg) scale(1.15); }
-    }
+.candle {
+  position: absolute;
+  bottom: 165px;
+  width: 24px;
+  height: 65px;
+  background: repeating-linear-gradient(45deg, #7bdff2, #7bdff2 8px, #fff 8px, #fff 16px);
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 4;
+}
 
-    .out .flame { display: none; }
+.candle:nth-child(1) { left: 75px; }
+.candle:nth-child(2) { left: 133px; }
+.candle:nth-child(3) { left: 191px; }
 
-    .envelope-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
+.flame {
+  position: absolute;
+  top: -27px;
+  left: 2px;
+  width: 20px;
+  height: 28px;
+  background: #ffbe0b;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  animation: flicker 0.4s infinite alternate;
+  box-shadow: 0 0 18px #ffbe0b;
+}
 
-    .envelope {
-      background: #fff;
-      border: 3px solid #ff69b4;
-      border-radius: 18px;
-      padding: 18px 10px;
-      min-height: 120px;
-      cursor: pointer;
-      box-shadow: 0 7px 0 #ffb3c6;
-      transition: 0.2s;
-    }
+@keyframes flicker {
+  from { transform: rotate(-45deg) scale(1); }
+  to { transform: rotate(-45deg) scale(1.18); }
+}
 
-    .envelope:hover {
-      transform: translateY(-6px) rotate(2deg);
-    }
+.out .flame { display: none; }
 
-    .emoji {
-      font-size: 2.5rem;
-      display: block;
-      margin-bottom: 8px;
-    }
+.envelope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
 
-    .note {
-      background: #fff9c4;
-      border: 3px dotted #ff69b4;
-      border-radius: 20px;
-      padding: 20px;
-      margin-top: 20px;
-      font-size: 1.2rem;
-      display: none;
-    }
+.envelope {
+  background: #fff;
+  border: 3px solid #ff69b4;
+  border-radius: 18px;
+  padding: 18px 10px;
+  min-height: 120px;
+  cursor: pointer;
+  box-shadow: 0 7px 0 #ffb3c6;
+  transition: 0.2s;
+}
 
-    .certificate {
-      background: #fffdf7;
-      border: 8px double #ff1493;
-      border-radius: 25px;
-      padding: 30px;
-      max-width: 760px;
-      box-shadow: 0 0 0 10px #fff176;
-    }
+.envelope:hover { transform: translateY(-6px) rotate(2deg); }
 
-    .confetti {
-      position: fixed;
-      top: -10px;
-      width: 10px;
-      height: 16px;
-      animation: fall 3s linear forwards;
-      z-index: 999;
-    }
+.emoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
 
-    @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(720deg);
-        opacity: 0;
-      }
-    }
+.counter {
+  font-size: 4rem;
+  color: #ff1493;
+  margin: 20px;
+  font-weight: bold;
+}
 
-    .counter {
-      font-size: 4rem;
-      color: #ff1493;
-      margin: 20px;
-      font-weight: bold;
-    }
-  </style>
+.certificate {
+  background: #fffdf7;
+  border: 8px double #ff1493;
+  border-radius: 25px;
+  padding: 30px;
+  max-width: 760px;
+  box-shadow: 0 0 0 10px #fff176;
+  z-index: 3;
+}
+
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 16px;
+  animation: fall 3s linear forwards;
+  z-index: 999;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.finalCakeWrap {
+  display: none;
+  margin-top: 25px;
+  animation: cakeRise 1.2s ease-out forwards;
+}
+
+@keyframes cakeRise {
+  from { transform: translateY(500px) scale(0.8); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.bigCake {
+  margin: auto;
+  width: min(92vw, 520px);
+  text-align: center;
+  filter: drop-shadow(0 12px 14px rgba(0,0,0,0.2));
+}
+
+.candleRow {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: -4px;
+}
+
+.miniCandle {
+  width: 18px;
+  height: 48px;
+  background: repeating-linear-gradient(45deg, #ff69b4, #ff69b4 7px, #fff 7px, #fff 14px);
+  border-radius: 8px;
+  position: relative;
+}
+
+.miniCandle::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 2px;
+  width: 15px;
+  height: 24px;
+  background: #ffd166;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  animation: flicker 0.35s infinite alternate;
+  box-shadow: 0 0 20px #ffd166;
+}
+
+.tier {
+  margin: auto;
+  height: 70px;
+  border: 6px solid white;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.tier1 { width: 48%; background: #ffafcc; }
+.tier2 { width: 68%; background: #bde0fe; }
+.tier3 { width: 84%; background: #caffbf; }
+.tier4 { width: 100%; background: #ffd6a5; }
+
+.finalText {
+  display: none;
+  margin-top: 20px;
+}
+
+@media (max-width: 520px) {
+  .card, .certificate { padding: 20px; }
+  button { width: 90%; }
+  .tier { height: 60px; }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="page active" id="page1">
-    <div class="card">
-      <h1>🎂 IT IS SARAF DAY 🎂</h1>
-      <p>Nobody panic.</p>
-      <p>The birthday girl has arrived.</p>
-      <p class="tiny">This website was made with an unreasonable amount of love.</p>
-      <button onclick="nextPage(2)">ENTER THE BIRTHDAY ZONE</button>
-    </div>
+<div class="page active" id="page1">
+  <div class="card">
+    <h1>🎂 IT IS SARAF DAY 🎂</h1>
+    <p>Nobody panic.</p>
+    <p>The birthday girl has arrived.</p>
+    <p class="tiny">This website was made with an unreasonable amount of love.</p>
+    <button onclick="nextPage(2)">ENTER THE BIRTHDAY ZONE</button>
   </div>
+</div>
 
-  <div class="page" id="page2">
-    <div class="card">
-      <h2>🎈 Birthday Check-In</h2>
-      <p><b>How old are you today?</b></p>
-      <button onclick="say('Correct. We have reviewed your application and determined that adulthood is a scam.')">9</button>
-      <button onclick="say('Correct. Nine and a half is a very serious age.')">Nine and a half</button>
-      <button onclick="say('Correct. Basically 9. We reject all other information.')">Basically 9</button>
+<div class="page" id="page2">
+  <div class="card">
+    <h2>🎈 Birthday Check-In</h2>
+    <p><b>Birthday Readiness Meter</b></p>
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
 
-      <p><b>Do you deserve cake?</b></p>
-      <button onclick="say('Correct. Cake authorisation granted.')">Yes</button>
-      <button onclick="say('Correct. Also yes. Obviously.')">Also yes</button>
-
-      <p><b>What is Saraf?</b></p>
-      <button onclick="say('Incorrect. Please read the question carefully and try again.')">A friend</button>
-      <button onclick="say('Correct. The committee is pleased with this answer.')">A best friend</button>
-      <button onclick="say('Also correct. In fact, this may be the most correct answer available.')">One of my favourite people on earth</button>
-
-      <div class="note" id="messageBox"></div>
-      <button onclick="nextPage(3)">Proceed to cake</button>
-    </div>
+    <div id="questionArea"></div>
+    <div class="note" id="checkMessage"></div>
+    <button id="nextQuestionBtn" style="display:none" onclick="nextQuestion()">Next question</button>
+    <button id="cakeCeremonyBtn" style="display:none" onclick="nextPage(3)">BEGIN THE CAKE CEREMONY 🎂</button>
   </div>
+</div>
 
-  <div class="page" id="page3">
-    <div class="card">
-      <h2>🎂 Candle Ceremony</h2>
-      <p>Please tap the candles to make birthday wishes. We take wishes very seriously around here.</p>
+<div class="page" id="page3">
+  <div class="card">
+    <h2>🎂 Candle Ceremony</h2>
+    <p>Please tap the candles to make birthday wishes. We take wishes very seriously around here.</p>
 
-      <div class="cake">
-        <div class="candle" onclick="blowCandle(this, 1)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this, 2)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this, 3)"><div class="flame"></div></div>
-        <div class="cake-top"></div>
-        <div class="cake-base"></div>
+    <div class="cake">
+      <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+      <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+      <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+      <div class="cake-top"></div>
+      <div class="cake-base"></div>
+    </div>
+
+    <div class="note" id="candleMessage"></div>
+    <button id="afterCandles" style="display:none" onclick="nextPage(4)">Continue</button>
+  </div>
+</div>
+
+<div class="page" id="page4">
+  <div class="card">
+    <h2>🌎 Geography Has Chosen Violence</h2>
+    <p id="geoText">If I could choose one thing today, it would be celebrating with you in person.</p>
+    <button onclick="geoNext()">Next</button>
+    <button id="geoBtn" style="display:none" onclick="nextPage(5)">ACCEPT DIGITAL AFFECTION 💖</button>
+  </div>
+</div>
+
+<div class="page" id="page5">
+  <div class="card">
+    <h2>💌 Letters For Saraf</h2>
+    <p>Some messages arrived for the birthday girl. Please open responsibly.</p>
+
+    <div class="envelope-grid">
+      <div class="envelope" onclick="openNote('Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
+      <div class="envelope" onclick="openNote('One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
+      <div class="envelope" onclick="openNote('Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
+      <div class="envelope" onclick="openNote('One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
+      <div class="envelope" onclick="openNote('The birthday committee has completed its review. They have concluded that you deserve cake, presents, attention and more cake.')"><span class="emoji">🎂</span>Birthday notice</div>
+      <div class="envelope" onclick="openNote('Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
+      <div class="envelope" onclick="openNote('Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
+      <div class="envelope" onclick="openNote('I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
+    </div>
+
+    <div class="note" id="letterNote"></div>
+    <button onclick="nextPage(6)">Next birthday procedure</button>
+  </div>
+</div>
+
+<div class="page" id="page6">
+  <div class="card">
+    <h2>📊 Official Saraf Statistics</h2>
+    <p>How many things does Yasha like about Saraf?</p>
+    <button onclick="startCounter()">Calculate</button>
+    <div class="counter" id="counter">?</div>
+    <div class="note" id="counterNote"></div>
+    <button onclick="nextPage(7)">Proceed to crowning</button>
+  </div>
+</div>
+
+<div class="page" id="page7">
+  <div class="certificate">
+    <h1>👑 OFFICIAL CERTIFICATE 👑</h1>
+    <p>This certifies that</p>
+    <h2>SARAF</h2>
+    <p>is loved more than she knows, appreciated more than she realises and has made the world significantly better simply by being in it.</p>
+    <p>Thank you for every laugh.</p>
+    <p>Thank you for every conversation.</p>
+    <p>Thank you for being you.</p>
+    <p>Thank you for existing.</p>
+    <p><b>Also, this friendship has a no-refunds policy.</b></p>
+
+    <button onclick="claimCake()">🍰 CLAIM BIRTHDAY CAKE 🍰</button>
+    <div class="note" id="cakeNote"></div>
+
+    <div class="finalCakeWrap" id="finalCakeWrap">
+      <div class="bigCake">
+        <div style="font-size:3rem;">👑</div>
+        <div class="candleRow">
+          <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
+          <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
+        </div>
+        <div class="tier tier1">💖 ✨ 💖</div>
+        <div class="tier tier2">🌈 🎂 🌈</div>
+        <div class="tier tier3">⭐ 🎀 ⭐ 🎀 ⭐</div>
+        <div class="tier tier4">🍰 HAPPY BIRTHDAY 🍰</div>
       </div>
 
-      <div class="note" id="candleMessage"></div>
-      <button id="afterCandles" style="display:none" onclick="nextPage(4)">Continue</button>
-    </div>
-  </div>
-
-  <div class="page" id="page4">
-    <div class="card">
-      <h2>🌎 Geography Has Chosen Violence</h2>
-      <p id="geoText">If I could choose one thing today, it would be celebrating with you in person.</p>
-      <button onclick="geoNext()">Next</button>
-      <button id="geoBtn" style="display:none" onclick="nextPage(5)">ACCEPT DIGITAL AFFECTION</button>
-    </div>
-  </div>
-
-  <div class="page" id="page5">
-    <div class="card">
-      <h2>💌 Letters For Saraf</h2>
-      <p>Some messages arrived for the birthday girl. Please open responsibly.</p>
-
-      <div class="envelope-grid">
-        <div class="envelope" onclick="openNote('Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
-        <div class="envelope" onclick="openNote('One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
-        <div class="envelope" onclick="openNote('Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
-        <div class="envelope" onclick="openNote('One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
-        <div class="envelope" onclick="openNote('The birthday committee has completed its review. They have concluded that you deserve cake, presents, attention and more cake.')"><span class="emoji">🎂</span>Birthday notice</div>
-        <div class="envelope" onclick="openNote('Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
-        <div class="envelope" onclick="openNote('Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
-        <div class="envelope" onclick="openNote('I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
+      <div class="finalText" id="finalText">
+        <h1>HAPPY BIRTHDAY SARAF 💖</h1>
+        <p>Now please enjoy this completely impractical quantity of cake.</p>
+        <p>P.S. I wish I could have celebrated with you today. So this cake will have to do.</p>
       </div>
-
-      <div class="note" id="letterNote"></div>
-      <button onclick="nextPage(6)">Next birthday procedure</button>
     </div>
   </div>
+</div>
 
-  <div class="page" id="page6">
-    <div class="card">
-      <h2>📊 Official Saraf Statistics</h2>
-      <p>How many things does Yasha like about Saraf?</p>
-      <button onclick="startCounter()">Calculate</button>
-      <div class="counter" id="counter">?</div>
-      <div class="note" id="counterNote"></div>
-      <button onclick="nextPage(7)">Proceed to crowning</button>
-    </div>
-  </div>
+<script>
+let blown = 0;
+let geoIndex = 0;
+let questionIndex = 0;
 
-  <div class="page" id="page7">
-    <div class="certificate">
-      <h1>👑 OFFICIAL CERTIFICATE 👑</h1>
-      <p>This certifies that</p>
-      <h2>SARAF</h2>
-      <p>is loved more than she knows, appreciated more than she realises and has made the world significantly better simply by being in it.</p>
-      <p>Thank you for every laugh.</p>
-      <p>Thank you for every conversation.</p>
-      <p>Thank you for being my person.</p>
-      <p>Thank you for existing.</p>
-      <p><b>Also, you are stuck with me.</b></p>
-      <button onclick="claimCake()">🍰 CLAIM BIRTHDAY CAKE 🍰</button>
-      <div class="note" id="cakeNote"></div>
-    </div>
-  </div>
+const questions = [
+  {
+    q: "How old are you today?",
+    options: [
+      ["9", "Correct. We have reviewed your application and determined that adulthood is a scam.", true],
+      ["Nine and a half", "Correct. Nine and a half is a very serious age.", true],
+      ["Basically 9", "Correct. Basically 9. We reject all other information.", true]
+    ]
+  },
+  {
+    q: "Do you deserve cake?",
+    options: [
+      ["Yes", "Correct. Cake authorisation granted.", true],
+      ["Also yes", "Correct. Also yes. Obviously.", true]
+    ]
+  },
+  {
+    q: "What is Saraf?",
+    options: [
+      ["A friend", "Incorrect. Please read the question carefully and try again.", false],
+      ["A best friend", "Correct. The committee is pleased with this answer.", true],
+      ["One of my favourite people on earth", "Also correct. In fact, this may be the most correct answer available.", true]
+    ]
+  },
+  {
+    q: "How many presents should Saraf receive?",
+    options: [
+      ["Many", "Excellent. You clearly understand the assignment.", true],
+      ["More than many", "Correct. This is the responsible answer.", true],
+      ["An irresponsible amount", "Correct. Finally, someone sensible.", true]
+    ]
+  },
+  {
+    q: "Are you prepared to receive an alarming amount of birthday affection today?",
+    options: [
+      ["Yes", "Thank you. The birthday department appreciates your cooperation.", true],
+      ["Absolutely", "Correct. Very brave of you.", true],
+      ["I suppose", "Accepted, but with concern.", true]
+    ]
+  }
+];
 
-  <script>
-    let blown = 0;
-    let geoIndex = 0;
+const geoLines = [
+  "Unfortunately geography has chosen violence.",
+  "So instead you are receiving this website.",
+  "It is essentially a digital birthday card that got wildly out of hand.",
+  "It is not as good as being there.",
+  "But it does have significantly more confetti than I do."
+];
 
-    const geoLines = [
-      "Unfortunately geography has chosen violence.",
-      "So instead you are receiving this website.",
-      "Which is admittedly less practical than a hug.",
-      "But considerably easier to email."
-    ];
+function nextPage(num) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("page" + num).classList.add("active");
+  confetti(35);
+  if (num === 2) showQuestion();
+}
 
-    function nextPage(num) {
-      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-      document.getElementById("page" + num).classList.add("active");
-      confetti(35);
-    }
+function showQuestion() {
+  const area = document.getElementById("questionArea");
+  const msg = document.getElementById("checkMessage");
+  const nextBtn = document.getElementById("nextQuestionBtn");
+  const cakeBtn = document.getElementById("cakeCeremonyBtn");
 
-    function say(text) {
-      const box = document.getElementById("messageBox");
-      box.style.display = "block";
-      box.innerText = text;
-    }
+  msg.style.display = "none";
+  nextBtn.style.display = "none";
+  cakeBtn.style.display = "none";
 
-    function blowCandle(el, num) {
-      if (el.classList.contains("out")) return;
-      el.classList.add("out");
-      blown++;
+  const progress = (questionIndex / questions.length) * 100;
+  document.getElementById("progressFill").style.width = progress + "%";
 
-      const box = document.getElementById("candleMessage");
-      box.style.display = "block";
+  const current = questions[questionIndex];
+  area.innerHTML = `<p><b>${current.q}</b></p>`;
 
-      if (blown === 1) box.innerText = "⭐ Wish received.";
-      if (blown === 2) box.innerText = "⭐ Extra wish received.";
-      if (blown === 3) {
-        box.innerText = "⭐ Triple wish combo activated.\n\nBefore we continue...\nYou make my life brighter than you probably realise.\nSome people make days easier simply by existing.\nYou are one of those people for me.";
-        document.getElementById("afterCandles").style.display = "inline-block";
-        confetti(100);
-      }
-    }
+  current.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.innerText = opt[0];
+    btn.onclick = () => answerQuestion(opt[1], opt[2]);
+    area.appendChild(btn);
+  });
+}
 
-    function geoNext() {
-      const text = document.getElementById("geoText");
-      if (geoIndex < geoLines.length) {
-        text.innerText = geoLines[geoIndex];
-        geoIndex++;
-      } else {
-        document.getElementById("geoBtn").style.display = "inline-block";
-        confetti(60);
-      }
-    }
+function answerQuestion(text, correct) {
+  const msg = document.getElementById("checkMessage");
+  msg.style.display = "block";
+  msg.innerText = text;
 
-    function openNote(text) {
-      const note = document.getElementById("letterNote");
+  if (!correct) {
+    confetti(10);
+    return;
+  }
+
+  confetti(35);
+
+  if (questionIndex === questions.length - 1) {
+    document.getElementById("progressFill").style.width = "100%";
+    document.getElementById("cakeCeremonyBtn").style.display = "inline-block";
+    msg.innerText = text + "\n\nBirthday status confirmed.\nCake eligibility confirmed.\nFavourite-person status confirmed.";
+  } else {
+    document.getElementById("nextQuestionBtn").style.display = "inline-block";
+  }
+}
+
+function nextQuestion() {
+  questionIndex++;
+  showQuestion();
+}
+
+function blowCandle(el) {
+  if (el.classList.contains("out")) return;
+  el.classList.add("out");
+  blown++;
+
+  const box = document.getElementById("candleMessage");
+  box.style.display = "block";
+
+  if (blown === 1) box.innerText = "⭐ Wish received.";
+  if (blown === 2) box.innerText = "⭐ Extra wish received.";
+  if (blown === 3) {
+    box.innerText = "⭐ Triple wish combo activated.\n\nBefore we continue...\nYou make my life brighter than you probably realise.\nSome people make days easier simply by existing.\nYou are one of those people for me.";
+    document.getElementById("afterCandles").style.display = "inline-block";
+    confetti(110);
+  }
+}
+
+function geoNext() {
+  const text = document.getElementById("geoText");
+  if (geoIndex < geoLines.length) {
+    text.innerText = geoLines[geoIndex];
+    geoIndex++;
+  } else {
+    document.getElementById("geoBtn").style.display = "inline-block";
+    confetti(60);
+  }
+}
+
+function openNote(text) {
+  const note = document.getElementById("letterNote");
+  note.style.display = "block";
+  note.innerText = text;
+  confetti(25);
+}
+
+function startCounter() {
+  const nums = ["1", "17", "42", "108", "527", "1,238", "8,462", "52,001", "999,999", "∞"];
+  let i = 0;
+  const counter = document.getElementById("counter");
+  const note = document.getElementById("counterNote");
+  note.style.display = "none";
+
+  const interval = setInterval(() => {
+    counter.innerText = nums[i];
+    i++;
+    if (i >= nums.length) {
+      clearInterval(interval);
       note.style.display = "block";
-      note.innerText = text;
-      confetti(20);
+      note.innerText = "Error. Number exceeds birthday database capacity.";
+      confetti(90);
     }
+  }, 250);
+}
 
-    function startCounter() {
-      const nums = ["1", "17", "42", "108", "527", "1,238", "8,462", "52,001", "999,999", "∞"];
-      let i = 0;
-      const counter = document.getElementById("counter");
-      const note = document.getElementById("counterNote");
-      note.style.display = "none";
+function claimCake() {
+  const note = document.getElementById("cakeNote");
+  const cake = document.getElementById("finalCakeWrap");
+  const finalText = document.getElementById("finalText");
 
-      const interval = setInterval(() => {
-        counter.innerText = nums[i];
-        i++;
-        if (i >= nums.length) {
-          clearInterval(interval);
-          note.style.display = "block";
-          note.innerText = "Error. Number exceeds birthday database capacity.";
-          confetti(80);
-        }
-      }, 250);
-    }
+  note.style.display = "block";
+  note.innerText = "Cake successfully claimed.\n\nPlease stand by.\nRetrieving birthday cake...\n\nUnexpected amount of cake detected.\nAdjusting...";
 
-    function claimCake() {
-      const note = document.getElementById("cakeNote");
-      note.style.display = "block";
-      note.innerText = "Cake successfully claimed.\n\nUnfortunately this website is not licensed to distribute physical cake.\n\nPlease contact your nearest best friend.";
-      confetti(180);
-    }
+  setTimeout(() => {
+    cake.style.display = "block";
+    confetti(220);
+  }, 900);
 
-    function confetti(count) {
-      for (let i = 0; i < count; i++) {
-        const piece = document.createElement("div");
-        piece.classList.add("confetti");
-        piece.style.left = Math.random() * 100 + "vw";
-        piece.style.background = ["#ff1493", "#ffd166", "#06d6a0", "#118ab2", "#9b5de5"][Math.floor(Math.random() * 5)];
-        piece.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(piece);
-        setTimeout(() => piece.remove(), 3500);
-      }
-    }
+  setTimeout(() => {
+    finalText.style.display = "block";
+    confetti(260);
+  }, 1700);
+}
 
-    function balloons() {
-      const emojis = ["🎈", "🎀", "⭐", "💖", "🎂", "✨"];
-      setInterval(() => {
-        const b = document.createElement("div");
-        b.classList.add("balloon");
-        b.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        b.style.left = Math.random() * 100 + "vw";
-        b.style.animationDuration = (Math.random() * 5 + 6) + "s";
-        document.body.appendChild(b);
-        setTimeout(() => b.remove(), 10000);
-      }, 900);
-    }
+function confetti(count) {
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("div");
+    piece.classList.add("confetti");
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.background = ["#ff1493", "#ffd166", "#06d6a0", "#118ab2", "#9b5de5", "#ff8fab"][Math.floor(Math.random() * 6)];
+    piece.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 3500);
+  }
+}
 
-    balloons();
-  </script>
+function balloons() {
+  const emojis = ["🎈", "🎀", "⭐", "💖", "🎂", "✨", "🌈"];
+  setInterval(() => {
+    const b = document.createElement("div");
+    b.classList.add("balloon");
+    b.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.animationDuration = (Math.random() * 5 + 6) + "s";
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 10000);
+  }, 1300);
+}
+
+balloons();
+</script>
 
 </body>
 </html>

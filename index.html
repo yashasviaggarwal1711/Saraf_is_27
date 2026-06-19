@@ -1108,19 +1108,29 @@ function startParade() {
 
   setTimeout(() => {
     document.getElementById("paradeNext").style.display = "inline-block";
-  }, 7000);
+  }, 9000);
 }
 
 function playBirthdayTune() {
   const notes = [
-    264,264,297,264,352,330,
-    264,264,297,264,396,352,
-    264,264,528,440,352,330,297,
-    466,466,440,352,396,352
+    262, 262, 294, 262, 349, 330,
+    262, 262, 294, 262, 392, 349,
+    262, 262, 523, 440, 349, 330, 294,
+    466, 466, 440, 349, 392, 349
   ];
 
+  const durations = [
+    0.28, 0.18, 0.42, 0.42, 0.42, 0.75,
+    0.28, 0.18, 0.42, 0.42, 0.42, 0.75,
+    0.28, 0.18, 0.42, 0.42, 0.42, 0.42, 0.85,
+    0.28, 0.18, 0.42, 0.42, 0.42, 0.9
+  ];
+
+  let time = 0;
+
   notes.forEach((freq, i) => {
-    tone(freq, i * 0.22, 0.18, 0.10, "triangle");
+    tone(freq, time, durations[i], 0.12, "triangle");
+    time += durations[i] + 0.06;
   });
 }
 

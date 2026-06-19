@@ -42,8 +42,8 @@ const questions = [
 ];
 
 const geoLines = [
-  "So instead you are receiving this website.",
-  "It is essentially a digital birthday card that got wildly out of hand.",
+  "Instead you got a website.",
+  "Which, if we are being honest, has consumed a concerning amount of my time.",
   "It is not as good as being there.",
   "But it does have significantly more confetti than I do."
 ];
@@ -98,10 +98,10 @@ function checkPassword() {
   note.style.display = "block";
 
   if (input === PASSWORD) {
-    note.innerText = "Password accepted.\nBirthday access granted.";
+    note.innerText = "Password accepted.\nBirthday access granted.\nPlease do not share classified birthday material with boring people.";
     confetti(100);
     soundChime();
-    setTimeout(() => nextPage(1), 800);
+    setTimeout(() => nextPage(1), 900);
   } else {
     note.innerText = "Identity could not be verified.\nAre you sure you are Saraf?";
     soundBoop();
@@ -158,7 +158,7 @@ function answerQuestion(text, correct) {
   if (questionIndex === questions.length - 1) {
     document.getElementById("progressFill").style.width = "100%";
     document.getElementById("checkNext").style.display = "inline-block";
-    msg.innerText = text + "\n\nBirthday status confirmed.\nFavourite-person status confirmed.";
+    msg.innerText = text + "\n\nBirthday status confirmed.\nFavourite-person status confirmed.\nWe may now proceed with the nonsense.";
   } else {
     document.getElementById("nextQuestionBtn").style.display = "inline-block";
   }
@@ -179,9 +179,9 @@ function blowCandle(el) {
   soundTwinkle();
 
   if (blown === 1) box.innerText = "⭐ Wish received.";
-  if (blown === 2) box.innerText = "⭐ Extra wish received.";
+  if (blown === 2) box.innerText = "⭐ Extra wish received. Very efficient.";
   if (blown === 3) {
-    box.innerText = "⭐ Triple wish combo activated.\n\nBefore we continue...\nYou make my life brighter than you probably realise.\nSome people make days easier simply by existing.\nYou are one of those people for me.";
+    box.innerText = "⭐ Triple wish combo activated.\n\nOkay.\nThis is unfortunately the sincere section.\nYou make my life happier.\nThere. I said it.\nWe can go back to the nonsense now.";
     document.getElementById("afterCandles").style.display = "inline-block";
     confetti(120);
   }
@@ -229,7 +229,7 @@ function popBalloon(el) {
 
   if (popped >= 5) {
     document.getElementById("popNote").style.display = "block";
-    document.getElementById("popNote").innerText = "Excellent.\nBalloon destruction licence granted.";
+    document.getElementById("popNote").innerText = "Excellent.\nBalloon destruction licence granted.\nNo further questions at this time.";
     document.getElementById("popNext").style.display = "inline-block";
     confetti(70);
     soundTwinkle();
@@ -251,11 +251,11 @@ function spinWheel() {
   const note = document.getElementById("wheelNote");
 
   const outcomes = [
-    "You have won: unlimited attention.",
+    "You have won: unlimited attention. This may be redeemed immediately.",
     "You have won: snack rights for the entire day.",
     "You have won: one dramatic entrance. Please use responsibly.",
     "You have won: compliments. Too many compliments. Legally concerning.",
-    "You have won: best friend affection. Non-transferable."
+    "You have won: best friend affection. Non-transferable. Non-refundable."
   ];
 
   wheel.classList.remove("spin");
@@ -286,7 +286,7 @@ function startCounter() {
     if (i >= nums.length) {
       clearInterval(interval);
       note.style.display = "block";
-      note.innerText = "Friendship exceeds measuring equipment.";
+      note.innerText = "I tried to calculate how much I like you.\nThe machine immediately gave up.";
       confetti(90);
       soundTwinkle();
     }

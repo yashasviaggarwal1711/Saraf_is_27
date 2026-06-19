@@ -6,165 +6,224 @@
 <title>Saraf Day</title>
 
 <style>
+:root {
+  --pink: #ff4fa3;
+  --dark-pink: #d63384;
+  --cream: #fff7eb;
+  --lavender: #bfa2ff;
+  --blue: #a8ddff;
+  --gold: #ffd166;
+  --ink: #392044;
+  --soft-pink: #ffe1f0;
+  --white: #ffffff;
+}
+
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Comic Sans MS", "Trebuchet MS", cursive;
-  color: #35184f;
-  overflow-x: hidden;
   min-height: 100vh;
+  font-family: "Trebuchet MS", "Comic Sans MS", cursive;
+  color: var(--ink);
   background:
-    radial-gradient(circle at 10% 20%, #fff176 0 10%, transparent 11%),
-    radial-gradient(circle at 90% 10%, #ff8fab 0 12%, transparent 13%),
-    radial-gradient(circle at 20% 90%, #90dbf4 0 13%, transparent 14%),
-    linear-gradient(135deg, #ff5ec4, #7bdff2, #fff176, #b9fbc0, #c77dff);
+    radial-gradient(circle at 12% 18%, rgba(255, 79, 163, 0.22), transparent 24%),
+    radial-gradient(circle at 88% 12%, rgba(191, 162, 255, 0.25), transparent 24%),
+    radial-gradient(circle at 18% 88%, rgba(168, 221, 255, 0.28), transparent 24%),
+    linear-gradient(135deg, #fff7eb, #ffe1f0, #f3edff);
+  overflow-x: hidden;
 }
 
 .page {
   display: none;
   min-height: 100vh;
   padding: 28px 16px;
-  text-align: center;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  text-align: center;
   overflow-y: auto;
-  position: relative;
 }
 
 .page.active { display: flex; }
 
-.card, .certificate {
-  background: rgba(255,255,255,0.93);
-  border: 5px dashed #ff1493;
+.card {
+  width: min(860px, 100%);
+  background: rgba(255,255,255,0.9);
+  border: 3px solid rgba(255, 79, 163, 0.35);
   border-radius: 34px;
-  padding: 28px;
-  max-width: 860px;
-  width: 100%;
-  box-shadow: 0 14px 35px rgba(0,0,0,0.22);
-  z-index: 2;
+  padding: 34px 26px;
+  box-shadow: 0 22px 50px rgba(57, 32, 68, 0.16);
+  position: relative;
+}
+
+.card::before {
+  content: "✦";
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  color: var(--pink);
+  font-size: 1.4rem;
+}
+
+.card::after {
+  content: "✦";
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  color: var(--lavender);
+  font-size: 1.4rem;
 }
 
 h1 {
-  font-size: clamp(2.2rem, 8vw, 5rem);
-  margin: 0 0 12px;
-  color: #ff1493;
-  text-shadow: 3px 3px #fff176, 6px 6px #7bdff2;
-  animation: bounceTitle 1.5s infinite;
-}
-
-@keyframes bounceTitle {
-  0%, 100% { transform: translateY(0) rotate(-1deg); }
-  50% { transform: translateY(-8px) rotate(1deg); }
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  margin: 0 0 14px;
+  color: var(--pink);
+  letter-spacing: -1px;
 }
 
 h2 {
-  font-size: clamp(1.8rem, 6vw, 3.1rem);
-  color: #7b2cbf;
-  margin: 0 0 16px;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  color: #7b4ad9;
+  margin: 0 0 14px;
 }
 
-p { font-size: 1.2rem; line-height: 1.45; }
+p {
+  font-size: 1.18rem;
+  line-height: 1.48;
+}
 
-button, input {
-  font-family: inherit;
+.tiny {
+  font-size: 0.95rem;
+  opacity: 0.75;
 }
 
 button {
+  font-family: inherit;
   border: none;
   border-radius: 999px;
-  padding: 15px 24px;
-  margin: 10px;
-  font-size: 1.05rem;
-  font-weight: bold;
+  padding: 14px 24px;
+  margin: 9px;
+  font-size: 1.02rem;
+  font-weight: 800;
   cursor: pointer;
-  background: linear-gradient(90deg, #ff4d9d, #ffd166, #4cc9f0);
-  color: #35184f;
-  box-shadow: 0 6px 0 #c9184a;
-  animation: tinyWiggle 2.2s infinite;
+  color: white;
+  background: var(--pink);
+  box-shadow: 0 7px 0 var(--dark-pink);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
-@keyframes tinyWiggle {
-  0%, 92%, 100% { transform: rotate(0deg); }
-  95% { transform: rotate(2deg); }
-  98% { transform: rotate(-2deg); }
+button:hover {
+  transform: translateY(-3px);
+  background: #ff2f93;
 }
 
-button:hover { transform: scale(1.07) rotate(-1deg); }
-button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--dark-pink);
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--pink), var(--lavender));
+  box-shadow: 0 7px 0 #8b5bd6;
+}
+
+.secondary {
+  background: white;
+  color: var(--pink);
+  border: 2px solid var(--pink);
+  box-shadow: 0 6px 0 var(--soft-pink);
+}
 
 input {
   width: min(90%, 360px);
-  border: 4px solid #ff1493;
+  border: 3px solid var(--soft-pink);
   border-radius: 999px;
-  padding: 16px 20px;
-  font-size: 1.2rem;
+  padding: 15px 20px;
+  font-size: 1.1rem;
   text-align: center;
   outline: none;
+  color: var(--ink);
+}
+
+input:focus {
+  border-color: var(--pink);
 }
 
 .note {
-  background: #fff9c4;
-  border: 3px dotted #ff1493;
-  border-radius: 22px;
-  padding: 20px;
-  margin-top: 20px;
-  font-size: 1.18rem;
   display: none;
+  margin: 20px auto 0;
+  padding: 18px 20px;
+  max-width: 650px;
+  background: var(--cream);
+  border: 2px solid var(--gold);
+  border-radius: 22px;
   white-space: pre-line;
+  font-size: 1.13rem;
 }
 
-.tiny { font-size: 0.95rem; opacity: 0.8; }
-
 .progress {
-  background: #ffe5ec;
-  border: 3px solid #ff1493;
+  height: 24px;
+  background: #f5eafd;
   border-radius: 999px;
-  height: 28px;
   overflow: hidden;
-  margin: 18px 0;
+  margin: 18px auto;
+  max-width: 560px;
 }
 
 .progress-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #ff1493, #ffd166, #06d6a0, #4cc9f0, #c77dff);
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, var(--pink), var(--lavender), var(--blue));
+  transition: width 0.35s ease;
 }
 
-.balloon {
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.tile {
+  background: white;
+  border: 2px solid var(--soft-pink);
+  border-radius: 24px;
+  padding: 18px 10px;
+  min-height: 120px;
+  cursor: pointer;
+  box-shadow: 0 9px 0 #ffd4e8;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 13px 0 #ffd4e8;
+}
+
+.emoji {
+  display: block;
+  font-size: 2.7rem;
+  margin-bottom: 8px;
+}
+
+.floating {
   position: fixed;
-  bottom: -120px;
-  font-size: 3rem;
-  animation: floatUp 9s linear infinite;
-  z-index: 0;
+  bottom: -80px;
+  font-size: 2.6rem;
   pointer-events: none;
+  animation: floatUp 9s linear forwards;
+  opacity: 0.8;
+  z-index: 0;
 }
 
 @keyframes floatUp {
-  from { transform: translateY(0) rotate(0deg); opacity: 0.95; }
-  to { transform: translateY(-120vh) rotate(25deg); opacity: 0; }
-}
-
-.sparkle {
-  position: fixed;
-  font-size: 1.7rem;
-  animation: sparklePop 1.1s ease-out forwards;
-  z-index: 998;
-  pointer-events: none;
-}
-
-@keyframes sparklePop {
-  from { transform: scale(0.2) rotate(0deg); opacity: 1; }
-  to { transform: scale(1.8) rotate(120deg); opacity: 0; }
+  to { transform: translateY(-115vh) rotate(18deg); opacity: 0; }
 }
 
 .confetti {
   position: fixed;
   top: -10px;
-  width: 10px;
-  height: 16px;
+  width: 9px;
+  height: 14px;
   animation: fall 3s linear forwards;
   z-index: 999;
 }
@@ -173,128 +232,76 @@ input {
   to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
-}
-
-.tile {
-  background: #fff;
-  border: 3px solid #ff1493;
-  border-radius: 20px;
-  padding: 18px 10px;
-  min-height: 120px;
-  cursor: pointer;
-  box-shadow: 0 7px 0 #ffb3c6;
-  transition: 0.2s;
-}
-
-.tile:hover { transform: translateY(-7px) rotate(2deg); }
-
-.emoji {
-  font-size: 2.8rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.companion-badge {
-  position: fixed;
-  right: 14px;
-  bottom: 14px;
-  background: white;
-  border: 3px solid #ff1493;
-  border-radius: 999px;
-  padding: 8px 13px;
-  font-size: 1.6rem;
-  z-index: 20;
-  box-shadow: 0 6px 0 #ffb3c6;
-  display: none;
-}
-
-.crownPreview {
-  font-size: 5rem;
-  margin: 15px;
-  background: #fff9c4;
-  border: 4px dotted #ff1493;
-  border-radius: 30px;
-  padding: 20px;
-}
-
 .cake {
   position: relative;
   width: 290px;
   height: 220px;
-  margin: 25px auto;
+  margin: 26px auto;
 }
 
 .cake-base {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 120px;
-  background: #ff4d9d;
-  border-radius: 25px 25px 40px 40px;
-  border: 6px solid #fff;
-  box-shadow: inset 0 -15px #ff006e;
+  height: 118px;
+  background: var(--pink);
+  border-radius: 24px 24px 38px 38px;
+  border: 6px solid white;
+  box-shadow: inset 0 -16px #e7358c;
 }
 
 .cake-top {
   position: absolute;
-  bottom: 105px;
+  bottom: 104px;
   left: 30px;
   width: 230px;
-  height: 65px;
-  background: #fff176;
+  height: 64px;
+  background: var(--cream);
   border-radius: 30px;
-  border: 6px solid #fff;
+  border: 6px solid white;
 }
 
 .candle {
   position: absolute;
-  bottom: 165px;
+  bottom: 164px;
   width: 24px;
-  height: 65px;
-  background: repeating-linear-gradient(45deg, #4cc9f0, #4cc9f0 8px, #fff 8px, #fff 16px);
+  height: 62px;
+  background: repeating-linear-gradient(45deg, var(--lavender), var(--lavender) 8px, white 8px, white 16px);
   border-radius: 10px;
   cursor: pointer;
   z-index: 4;
 }
 
-.candle:nth-child(1) { left: 75px; }
+.candle:nth-child(1) { left: 76px; }
 .candle:nth-child(2) { left: 133px; }
-.candle:nth-child(3) { left: 191px; }
-
-.flame, .miniCandle::before {
-  position: absolute;
-  background: #ffd166;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  animation: flicker 0.35s infinite alternate;
-  box-shadow: 0 0 22px #ffd166;
-}
+.candle:nth-child(3) { left: 190px; }
 
 .flame {
-  top: -27px;
+  position: absolute;
+  top: -26px;
   left: 2px;
   width: 20px;
-  height: 28px;
+  height: 27px;
+  background: var(--gold);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  animation: flicker 0.38s infinite alternate;
+  box-shadow: 0 0 20px var(--gold);
 }
 
 @keyframes flicker {
   from { transform: rotate(-45deg) scale(1); }
-  to { transform: rotate(-45deg) scale(1.22); }
+  to { transform: rotate(-45deg) scale(1.18); }
 }
 
 .out .flame { display: none; }
 
-.pop-area, .catch-area {
+.pop-area {
   position: relative;
-  height: 340px;
-  border: 4px dashed #4cc9f0;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.58);
+  height: 330px;
+  border: 2px dashed var(--lavender);
+  border-radius: 28px;
+  background: rgba(255,255,255,0.55);
   overflow: hidden;
   margin-top: 20px;
 }
@@ -307,20 +314,7 @@ input {
 }
 
 @keyframes bob {
-  from { transform: translateY(0); }
   to { transform: translateY(-12px); }
-}
-
-.fallingItem {
-  position: absolute;
-  top: -50px;
-  font-size: 2.5rem;
-  cursor: pointer;
-  animation: fallItem 3s linear forwards;
-}
-
-@keyframes fallItem {
-  to { transform: translateY(430px); }
 }
 
 .wheel {
@@ -329,12 +323,12 @@ input {
   border-radius: 50%;
   margin: 25px auto;
   border: 8px solid white;
-  background: conic-gradient(#ff1493, #ffd166, #06d6a0, #4cc9f0, #c77dff, #ff1493);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.22);
+  background: conic-gradient(var(--pink), var(--gold), var(--blue), var(--lavender), var(--pink));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 4rem;
+  box-shadow: 0 14px 30px rgba(57,32,68,0.2);
 }
 
 .spin { animation: spinWheel 1.2s ease-out; }
@@ -344,60 +338,51 @@ input {
   to { transform: rotate(1080deg); }
 }
 
-.giftMachine {
-  font-size: 5rem;
-  margin: 25px;
-  animation: machineBounce 1s infinite;
-}
-
-@keyframes machineBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
 .counter {
   font-size: 4rem;
-  color: #ff1493;
+  color: var(--pink);
   margin: 20px;
-  font-weight: bold;
+  font-weight: 900;
 }
 
 .certificate {
+  width: min(940px, 100%);
   background: #fffdf7;
   border: 12px double #c58b00;
-  box-shadow: 0 0 0 8px #fff176, 0 18px 35px rgba(0,0,0,0.25);
-  color: #2b1642;
-  max-width: 900px;
+  border-radius: 16px;
+  padding: 38px 26px;
+  box-shadow: 0 0 0 8px #fff2bf, 0 20px 50px rgba(57,32,68,0.22);
 }
 
 .cert-title {
-  color: #7b2cbf;
-  text-shadow: none;
-  animation: none;
+  color: #7b4ad9;
   font-size: clamp(2rem, 6vw, 4rem);
+  margin-bottom: 18px;
 }
 
 .cert-name {
-  font-size: clamp(2.8rem, 9vw, 5.5rem);
-  color: #ff1493;
-  margin: 8px 0;
-  border-bottom: 4px solid #c58b00;
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: var(--pink);
+  font-weight: 900;
   display: inline-block;
-  padding: 0 25px;
+  padding: 0 30px 8px;
+  border-bottom: 4px solid #c58b00;
+  margin: 5px 0 12px;
 }
 
 .cert-list {
   text-align: left;
   display: inline-block;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   line-height: 1.8;
+  margin: 12px 0;
 }
 
 .seal {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff176, #ffd166, #c58b00);
+  background: radial-gradient(circle, #fff6b8, var(--gold), #c58b00);
   border: 5px solid #a66a00;
   margin: 20px auto;
   display: flex;
@@ -409,7 +394,7 @@ input {
 
 .paradeStage {
   height: 230px;
-  border: 4px dashed #ff1493;
+  border: 2px dashed var(--pink);
   border-radius: 28px;
   background: rgba(255,255,255,0.65);
   overflow: hidden;
@@ -417,10 +402,22 @@ input {
   margin-top: 20px;
 }
 
+.songBubble {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--cream);
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 1.25rem;
+}
+
 .paradeLine {
   position: absolute;
-  left: -900px;
-  top: 70px;
+  left: -880px;
+  top: 88px;
   font-size: 3rem;
   white-space: nowrap;
 }
@@ -431,34 +428,21 @@ input {
   to { left: 105%; }
 }
 
-.songBubble {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.4rem;
-  background: #fff9c4;
-  border: 3px dotted #ff1493;
-  border-radius: 999px;
-  padding: 12px 20px;
-}
-
 .finalCakeWrap {
   display: none;
-  margin-top: 25px;
-  animation: cakeRise 1.2s ease-out forwards;
+  margin-top: 24px;
+  animation: cakeRise 1.1s ease-out forwards;
 }
 
 @keyframes cakeRise {
-  from { transform: translateY(500px) scale(0.8); opacity: 0; }
+  from { transform: translateY(420px) scale(0.86); opacity: 0; }
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 .bigCake {
   margin: auto;
-  width: min(92vw, 530px);
-  text-align: center;
-  filter: drop-shadow(0 12px 14px rgba(0,0,0,0.2));
+  width: min(92vw, 520px);
+  filter: drop-shadow(0 14px 18px rgba(57,32,68,0.18));
 }
 
 .candleRow {
@@ -471,17 +455,23 @@ input {
 .miniCandle {
   width: 18px;
   height: 48px;
-  background: repeating-linear-gradient(45deg, #ff1493, #ff1493 7px, #fff 7px, #fff 14px);
+  background: repeating-linear-gradient(45deg, var(--pink), var(--pink) 7px, white 7px, white 14px);
   border-radius: 8px;
   position: relative;
 }
 
 .miniCandle::before {
   content: "";
+  position: absolute;
   top: -24px;
   left: 2px;
   width: 15px;
   height: 24px;
+  background: var(--gold);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  animation: flicker 0.35s infinite alternate;
+  box-shadow: 0 0 20px var(--gold);
 }
 
 .tier {
@@ -492,77 +482,70 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.55rem;
+  font-weight: 900;
 }
 
-.tier1 { width: 48%; background: #ffafcc; }
-.tier2 { width: 68%; background: #bde0fe; }
-.tier3 { width: 84%; background: #caffbf; }
-.tier4 { width: 100%; background: #ffd6a5; }
+.tier1 { width: 48%; background: #ffd6e8; }
+.tier2 { width: 68%; background: #d9caff; }
+.tier3 { width: 84%; background: #d8f0ff; }
+.tier4 { width: 100%; background: #fff0b8; }
 
-.finalText { display: none; margin-top: 20px; }
+.finalText {
+  display: none;
+  margin-top: 20px;
+}
+
+.footer {
+  margin-top: 24px;
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
 
 @media print {
   body { background: white; }
   .page { display: none !important; }
-  #page16 { display: flex !important; }
-  button, .companion-badge, .balloon, .confetti, .sparkle { display: none !important; }
-  .certificate { box-shadow: none; }
+  #page10 { display: flex !important; padding: 0; }
+  .certificate { box-shadow: none; width: 100%; border-radius: 0; }
+  button, .floating, .confetti, .footer { display: none !important; }
 }
 
-@media (max-width: 520px) {
-  .card, .certificate { padding: 20px; }
+@media (max-width: 560px) {
+  .card, .certificate { padding: 24px 18px; }
   button { width: 90%; }
-  .tier { height: 60px; }
-  .pop-area, .catch-area { height: 310px; }
+  .pop-area { height: 310px; }
+  .tier { height: 60px; font-size: 1.2rem; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="companion-badge" id="companionBadge">🐧</div>
-
 <div class="page active" id="page0">
   <div class="card">
-    <h1>🔒 Restricted Birthday Access</h1>
+    <h1>🔒 Birthday Access</h1>
     <p>This website contains sensitive birthday information.</p>
     <p>Access is restricted to authorised birthday girls only.</p>
-    <input id="passwordInput" placeholder="enter birthday password" />
+    <input id="passwordInput" placeholder="enter password" />
     <br />
-    <button onclick="checkPassword()">VERIFY IDENTITY</button>
+    <button class="primary" onclick="checkPassword()">VERIFY IDENTITY</button>
     <div class="note" id="passwordNote"></div>
+    <div class="footer">Powered by friendship™</div>
   </div>
 </div>
 
 <div class="page" id="page1">
   <div class="card">
-    <h1>🎂 IT IS SARAF DAY 🎂</h1>
+    <h1>🎂 IT IS SARAF DAY</h1>
     <p>Nobody panic.</p>
     <p>The birthday girl has arrived.</p>
     <p class="tiny">This website was made with an unreasonable amount of love.</p>
-    <button onclick="nextPage(2)">BEGIN BIRTHDAY PROCEDURES</button>
+    <button class="primary" onclick="nextPage(2)">ENTER THE BIRTHDAY ZONE</button>
+    <div class="footer">Powered by friendship™</div>
   </div>
 </div>
 
 <div class="page" id="page2">
-  <div class="card">
-    <h2>🐧 Choose Your Birthday Companion</h2>
-    <p>Please select one creature to accompany you through official birthday proceedings.</p>
-    <div class="grid">
-      <div class="tile" onclick="chooseCompanion('🐧','Penguin')"><span class="emoji">🐧</span>Penguin</div>
-      <div class="tile" onclick="chooseCompanion('🦦','Otter')"><span class="emoji">🦦</span>Otter</div>
-      <div class="tile" onclick="chooseCompanion('🐥','Chick')"><span class="emoji">🐥</span>Chick</div>
-      <div class="tile" onclick="chooseCompanion('🦭','Seal')"><span class="emoji">🦭</span>Seal</div>
-      <div class="tile" onclick="chooseCompanion('🐰','Bunny')"><span class="emoji">🐰</span>Bunny</div>
-      <div class="tile" onclick="chooseCompanion('🦆','Duck')"><span class="emoji">🦆</span>Duck</div>
-    </div>
-    <div class="note" id="companionNote"></div>
-    <button id="companionNext" style="display:none" onclick="nextPage(3)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page3">
   <div class="card">
     <h2>🎈 Birthday Check-In</h2>
     <p><b>Birthday Readiness Meter</b></p>
@@ -570,36 +553,16 @@ input {
     <div id="questionArea"></div>
     <div class="note" id="checkMessage"></div>
     <button id="nextQuestionBtn" style="display:none" onclick="nextQuestion()">Next question</button>
-    <button id="checkNext" style="display:none" onclick="nextPage(4)">Proceed to Crown Studio 👑</button>
+    <button id="checkNext" class="primary" style="display:none" onclick="nextPage(3)">BEGIN THE CAKE CEREMONY</button>
   </div>
 </div>
 
-<div class="page" id="page4">
-  <div class="card">
-    <h2>👑 Royal Crown Design Studio</h2>
-    <p>Every birthday girl requires official headwear.</p>
-    <div class="crownPreview" id="crownPreview">👑</div>
-    <p><b>Choose gems</b></p>
-    <button onclick="setCrown('💖')">Pink hearts</button>
-    <button onclick="setCrown('💙')">Blue gems</button>
-    <button onclick="setCrown('💜')">Purple gems</button>
-    <button onclick="setCrown('💚')">Green gems</button>
-    <button onclick="setCrown('🌈')">Rainbow chaos</button>
-    <p><b>Add decoration</b></p>
-    <button onclick="addDecor('⭐')">Stars</button>
-    <button onclick="addDecor('🎀')">Bows</button>
-    <button onclick="addDecor('✨')">Sparkles</button>
-    <button onclick="addDecor('💖')">More hearts</button>
-    <div class="note" id="crownNote"></div>
-    <button onclick="approveCrown()">APPROVE CROWN</button>
-    <button id="crownNext" style="display:none" onclick="nextPage(5)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page5">
+<div class="page" id="page3">
   <div class="card">
     <h2>🎂 Candle Ceremony</h2>
-    <p>Please tap the candles to make birthday wishes. We take wishes very seriously around here.</p>
+    <p>Please tap the candles to make birthday wishes.</p>
+    <p>We take wishes very seriously around here.</p>
+
     <div class="cake">
       <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
       <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
@@ -607,99 +570,38 @@ input {
       <div class="cake-top"></div>
       <div class="cake-base"></div>
     </div>
+
     <div class="note" id="candleMessage"></div>
-    <button id="afterCandles" style="display:none" onclick="nextPage(6)">Continue</button>
+    <button id="afterCandles" class="primary" style="display:none" onclick="nextPage(4)">Continue</button>
   </div>
 </div>
 
-<div class="page" id="page6">
+<div class="page" id="page4">
   <div class="card">
     <h2>🌎 Long Distance Birthday Department</h2>
     <p id="geoText">If I could choose one thing today, it would be celebrating with you in person.</p>
     <button onclick="geoNext()">Next</button>
-    <button id="geoBtn" style="display:none" onclick="nextPage(7)">ACCEPT DIGITAL AFFECTION 💖</button>
+    <button id="geoBtn" class="primary" style="display:none" onclick="nextPage(5)">ACCEPT DIGITAL AFFECTION</button>
   </div>
 </div>
 
-<div class="page" id="page7">
+<div class="page" id="page5">
   <div class="card">
     <h2>🎈 Balloon Popping Round</h2>
     <p>Before proceeding, please pop 5 birthday balloons.</p>
     <p><b id="popCount">Balloons popped: 0/5</b></p>
     <div class="pop-area" id="popArea"></div>
     <div class="note" id="popNote"></div>
-    <button id="popNext" style="display:none" onclick="nextPage(8)">Proceed</button>
+    <button id="popNext" class="primary" style="display:none" onclick="nextPage(6)">Proceed</button>
   </div>
 </div>
 
-<div class="page" id="page8">
-  <div class="card">
-    <h2>🌟 Catch The Sparkles</h2>
-    <p>Tap 7 falling sparkles. This is important birthday administration.</p>
-    <p><b id="catchScore">Sparkles collected: 0/7</b></p>
-    <button onclick="startCatchGame()">START SPARKLE COLLECTION</button>
-    <div class="catch-area" id="catchArea"></div>
-    <div class="note" id="catchNote"></div>
-    <button id="catchNext" style="display:none" onclick="nextPage(9)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page9">
-  <div class="card">
-    <h2>👜 What's In Saraf's Birthday Bag?</h2>
-    <p>Click the bag. Receive highly necessary birthday items.</p>
-    <div class="giftMachine">👜</div>
-    <button onclick="birthdayBag()">CHECK BAG</button>
-    <div class="note" id="bagNote"></div>
-    <button onclick="nextPage(10)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page10">
-  <div class="card">
-    <h2>🎡 Spin The Birthday Wheel</h2>
-    <p>Let us see what the birthday authorities have assigned you.</p>
-    <div class="wheel" id="wheel">🎂</div>
-    <button onclick="spinWheel()">SPIN</button>
-    <div class="note" id="wheelNote"></div>
-    <button onclick="nextPage(11)">Next</button>
-  </div>
-</div>
-
-<div class="page" id="page11">
-  <div class="card">
-    <h2 id="hideSeekTitle">🐧 Find Your Birthday Companion</h2>
-    <p>Your companion is hiding. Very childish behaviour. Please locate them.</p>
-    <div class="grid">
-      <div class="tile" onclick="findCompanion(0)">🎁</div>
-      <div class="tile" onclick="findCompanion(1)">🎁</div>
-      <div class="tile" onclick="findCompanion(2)">🎁</div>
-      <div class="tile" onclick="findCompanion(3)">🎁</div>
-    </div>
-    <div class="note" id="hideNote"></div>
-    <button id="hideNext" style="display:none" onclick="nextPage(12)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page12">
-  <div class="card">
-    <h2>🎭 Saraf Behaviour Detector</h2>
-    <p>Which behaviour has been detected today?</p>
-    <div class="grid">
-      <div class="tile" onclick="sarafBehaviour('Being adorable by accident has been logged.')"><span class="emoji">✨</span>Adorable by accident</div>
-      <div class="tile" onclick="sarafBehaviour('Excellent opinions detected. Extremely suspicious.')"><span class="emoji">📣</span>Excellent opinions</div>
-      <div class="tile" onclick="sarafBehaviour('Being deeply lovable has been recorded as a recurring issue.')"><span class="emoji">💖</span>Deeply lovable</div>
-      <div class="tile" onclick="sarafBehaviour('Main character behaviour confirmed.')"><span class="emoji">👑</span>Main character</div>
-    </div>
-    <div class="note" id="behaviourNote"></div>
-    <button onclick="nextPage(13)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page13">
+<div class="page" id="page6">
   <div class="card">
     <h2>💌 Letters For Saraf</h2>
-    <p>Some messages arrived for the birthday girl. Please open responsibly.</p>
+    <p>Some messages arrived for the birthday girl.</p>
+    <p>Please open responsibly.</p>
+
     <div class="grid">
       <div class="tile" onclick="openNote('Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
       <div class="tile" onclick="openNote('One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
@@ -710,39 +612,54 @@ input {
       <div class="tile" onclick="openNote('Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
       <div class="tile" onclick="openNote('I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
     </div>
+
     <div class="note" id="letterNote"></div>
-    <button onclick="nextPage(14)">Next birthday procedure</button>
+    <button class="primary" onclick="nextPage(7)">Next birthday procedure</button>
   </div>
 </div>
 
-<div class="page" id="page14">
+<div class="page" id="page7">
+  <div class="card">
+    <h2>🎡 Birthday Wheel</h2>
+    <p>Let us see what the birthday authorities have assigned you.</p>
+    <div class="wheel" id="wheel">🎂</div>
+    <button onclick="spinWheel()">SPIN</button>
+    <div class="note" id="wheelNote"></div>
+    <button class="primary" onclick="nextPage(8)">Continue</button>
+  </div>
+</div>
+
+<div class="page" id="page8">
   <div class="card">
     <h2>📊 Friendship Meter</h2>
     <p>Measuring friendship. Please stand dramatically.</p>
     <button onclick="startCounter()">MEASURE</button>
     <div class="counter" id="counter">?</div>
     <div class="note" id="counterNote"></div>
-    <button onclick="nextPage(15)">Proceed</button>
+    <button class="primary" onclick="nextPage(9)">Proceed to certificate</button>
   </div>
 </div>
 
-<div class="page" id="page15">
+<div class="page" id="page9">
   <div class="card">
-    <h2>📸 Important Birthday Notice</h2>
-    <p>If anything in this website makes you laugh, smile, cry or question my sanity, please send me screenshots.</p>
-    <p>I spent an unreasonable amount of time making this and would like to be rewarded accordingly.</p>
-    <button onclick="nextPage(16)">I understand my duties</button>
+    <h2>🏆 Certificate Incoming</h2>
+    <p>Birthday procedures complete.</p>
+    <p>Generating official documentation...</p>
+    <button class="primary" onclick="nextPage(10)">VIEW CERTIFICATE</button>
   </div>
 </div>
 
-<div class="page" id="page16">
+<div class="page" id="page10">
   <div class="certificate">
     <h1 class="cert-title">OFFICIAL CERTIFICATE OF EXTREME IMPORTANCE</h1>
     <p>This certifies that</p>
     <div class="cert-name">SARAF</div>
-    <p>has successfully completed all required Birthday Procedures and is hereby recognised as</p>
-    <h2>One Of Yasha's Favourite People On Earth</h2>
-    <div class="seal" id="certSeal">👑</div>
+    <p>has successfully completed all Birthday Procedures and is hereby awarded the title of</p>
+    <h2>Extremely Important Person</h2>
+
+    <div class="seal">👑</div>
+
+    <p>For outstanding achievement in:</p>
     <div class="cert-list">
       ⭐ Being a wonderful friend<br>
       ⭐ Improving life simply by existing<br>
@@ -750,53 +667,56 @@ input {
       ⭐ Being deeply lovable<br>
       ⭐ Accepting official birthday nonsense with grace
     </div>
-    <p><b>Birthday Companion:</b> <span id="certAnimal">🐧 Penguin</span></p>
-    <p><b>Crown Status:</b> <span id="certCrown">Approved 👑</span></p>
+
     <p><b>Friendship Status:</b> Permanent</p>
+    <p><b>Awarded on:</b> Saraf Day</p>
     <p>Signed,</p>
     <h2>Yasha</h2>
     <p>President, Department of Birthday Affairs</p>
-    <button onclick="window.print()">Screenshot / Print Certificate</button>
-    <button onclick="nextPage(17)">Summon Birthday Parade 🎺</button>
+
+    <button onclick="window.print()">Print Certificate</button>
+    <button class="primary" onclick="nextPage(11)">Summon Birthday Parade</button>
   </div>
 </div>
 
-<div class="page" id="page17">
+<div class="page" id="page11">
   <div class="card">
     <h2>🎺 Animal Birthday Parade</h2>
     <p>The birthday parade has arrived. Obviously.</p>
-    <button onclick="startParade()">START BIRTHDAY SONG 🎵</button>
+    <button class="primary" onclick="startParade()">START BIRTHDAY SONG</button>
+
     <div class="paradeStage">
       <div class="songBubble" id="songBubble">Ready when you are.</div>
-      <div class="paradeLine" id="paradeLine">🎺 🐧 🦦 🐥 🦭 🐰 🦆 🎈 👑 💖 🌈</div>
+      <div class="paradeLine" id="paradeLine">🎺 🐧 🎺 🦆 🎺 🐰 🎺 🦭 🎺 🐥 🎈 👑 💖</div>
     </div>
-    <button id="paradeNext" style="display:none" onclick="nextPage(18)">Final birthday thing</button>
+
+    <button id="paradeNext" class="primary" style="display:none" onclick="nextPage(12)">Final birthday thing</button>
   </div>
 </div>
 
-<div class="page" id="page18">
+<div class="page" id="page12">
   <div class="card">
-    <h1>🎂 FINAL BIRTHDAY DEPLOYMENT 🎂</h1>
+    <h1>🎂 FINAL BIRTHDAY DEPLOYMENT</h1>
     <p>The Department has reviewed your file.</p>
     <p>It has concluded that a normal amount of celebration would be insufficient.</p>
-    <button onclick="claimCake()">DEPLOY FINAL BIRTHDAY CAKE</button>
+    <button class="primary" onclick="claimCake()">DEPLOY FINAL BIRTHDAY CAKE</button>
     <div class="note" id="cakeNote"></div>
 
     <div class="finalCakeWrap" id="finalCakeWrap">
       <div class="bigCake">
-        <div style="font-size:3rem;" id="cakeTopper">👑</div>
+        <div style="font-size:3rem;">👑</div>
         <div class="candleRow">
           <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
           <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
         </div>
         <div class="tier tier1">💖 ✨ 💖</div>
-        <div class="tier tier2">🌈 HAPPY 🌈</div>
-        <div class="tier tier3">⭐ BIRTHDAY ⭐ SARAF ⭐</div>
-        <div class="tier tier4">🍰 VERY IMPORTANT CAKE 🍰</div>
+        <div class="tier tier2">HAPPY</div>
+        <div class="tier tier3">BIRTHDAY SARAF</div>
+        <div class="tier tier4">VERY IMPORTANT CAKE</div>
       </div>
 
       <div class="finalText" id="finalText">
-        <h1>HAPPY BIRTHDAY SARAF 💖</h1>
+        <h1>HAPPY BIRTHDAY SARAF</h1>
         <p>I love you very much.</p>
         <p>Thank you for being one of my favourite people.</p>
         <p>Have the best birthday.</p>
@@ -809,19 +729,10 @@ input {
 <script>
 const PASSWORD = "SARAFDAY";
 
-let companionEmoji = "🐧";
-let companionName = "Penguin";
-let crownGem = "💖";
-let crownDecor = "✨";
-let crownApproved = false;
-
+let questionIndex = 0;
 let blown = 0;
 let geoIndex = 0;
-let questionIndex = 0;
 let popped = 0;
-let collected = 0;
-let catchGameStarted = false;
-const hideSpot = Math.floor(Math.random() * 4);
 
 const questions = [
   {
@@ -871,12 +782,11 @@ function checkPassword() {
   note.style.display = "block";
 
   if (input === PASSWORD) {
-    note.innerText = "Password accepted.\nBirthday access granted.\nPlease do not share classified birthday materials with unauthorised personnel.";
-    confetti(120);
-    setTimeout(() => nextPage(1), 900);
+    note.innerText = "Password accepted.\nBirthday access granted.";
+    confetti(100);
+    setTimeout(() => nextPage(1), 800);
   } else {
     note.innerText = "Identity could not be verified.\nAre you sure you are Saraf?";
-    sparkleBurst();
   }
 }
 
@@ -884,27 +794,10 @@ function nextPage(num) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("page" + num).classList.add("active");
   window.scrollTo(0, 0);
-  confetti(25);
-  sparkleBurst();
+  confetti(18);
 
-  if (num === 3) showQuestion();
-  if (num === 7) setupBalloonGame();
-  if (num === 11) {
-    document.getElementById("hideSeekTitle").innerText = `${companionEmoji} Find Your Birthday Companion`;
-  }
-  if (num === 16) updateCertificate();
-  if (num === 18) document.getElementById("cakeTopper").innerText = companionEmoji + " 👑";
-}
-
-function chooseCompanion(emoji, name) {
-  companionEmoji = emoji;
-  companionName = name;
-  document.getElementById("companionBadge").style.display = "block";
-  document.getElementById("companionBadge").innerText = `${emoji} ✨`;
-  document.getElementById("companionNote").style.display = "block";
-  document.getElementById("companionNote").innerText = `Excellent choice.\n${name} is now legally responsible for your birthday experience.`;
-  document.getElementById("companionNext").style.display = "inline-block";
-  confetti(70);
+  if (num === 2) showQuestion();
+  if (num === 5) setupBalloonGame();
 }
 
 function showQuestion() {
@@ -935,7 +828,7 @@ function answerQuestion(text, correct) {
   msg.innerText = text;
 
   if (!correct) {
-    confetti(8);
+    confetti(6);
     return;
   }
 
@@ -944,7 +837,7 @@ function answerQuestion(text, correct) {
   if (questionIndex === questions.length - 1) {
     document.getElementById("progressFill").style.width = "100%";
     document.getElementById("checkNext").style.display = "inline-block";
-    msg.innerText = text + "\n\nBirthday status confirmed.\nFavourite-person status confirmed.\nProceeding with ceremony.";
+    msg.innerText = text + "\n\nBirthday status confirmed.\nFavourite-person status confirmed.";
   } else {
     document.getElementById("nextQuestionBtn").style.display = "inline-block";
   }
@@ -953,28 +846,6 @@ function answerQuestion(text, correct) {
 function nextQuestion() {
   questionIndex++;
   showQuestion();
-}
-
-function updateCrown() {
-  document.getElementById("crownPreview").innerText = `${crownDecor} ${crownGem} 👑 ${crownGem} ${crownDecor}`;
-}
-
-function setCrown(gem) {
-  crownGem = gem;
-  updateCrown();
-}
-
-function addDecor(decor) {
-  crownDecor = decor;
-  updateCrown();
-}
-
-function approveCrown() {
-  crownApproved = true;
-  document.getElementById("crownNote").style.display = "block";
-  document.getElementById("crownNote").innerText = "Crown approved.\nAuthority levels increasing.\nBirthday powers increased by 78%.";
-  document.getElementById("crownNext").style.display = "inline-block";
-  confetti(100);
 }
 
 function blowCandle(el) {
@@ -1001,7 +872,7 @@ function geoNext() {
     geoIndex++;
   } else {
     document.getElementById("geoBtn").style.display = "inline-block";
-    confetti(60);
+    confetti(50);
   }
 }
 
@@ -1010,6 +881,7 @@ function setupBalloonGame() {
   document.getElementById("popCount").innerText = "Balloons popped: 0/5";
   document.getElementById("popNote").style.display = "none";
   document.getElementById("popNext").style.display = "none";
+
   const area = document.getElementById("popArea");
   area.innerHTML = "";
 
@@ -1028,85 +900,29 @@ function popBalloon(el) {
   el.remove();
   popped++;
   document.getElementById("popCount").innerText = `Balloons popped: ${popped}/5`;
-  confetti(20);
+  confetti(15);
 
   if (popped >= 5) {
     document.getElementById("popNote").style.display = "block";
     document.getElementById("popNote").innerText = "Excellent.\nBalloon destruction licence granted.";
     document.getElementById("popNext").style.display = "inline-block";
-    confetti(80);
+    confetti(70);
   }
 }
 
-function startCatchGame() {
-  if (catchGameStarted) return;
-  catchGameStarted = true;
-  collected = 0;
-
-  const area = document.getElementById("catchArea");
-  const score = document.getElementById("catchScore");
-  const note = document.getElementById("catchNote");
-  const next = document.getElementById("catchNext");
-
-  area.innerHTML = "";
-  score.innerText = "Sparkles collected: 0/7";
-  note.style.display = "none";
-  next.style.display = "none";
-
-  let drops = 0;
-  const interval = setInterval(() => {
-    drops++;
-    const item = document.createElement("div");
-    item.className = "fallingItem";
-    item.innerText = ["✨", "⭐", "💖", "🎀"][Math.floor(Math.random() * 4)];
-    item.style.left = Math.random() * 80 + 8 + "%";
-    item.onclick = () => {
-      item.remove();
-      collected++;
-      score.innerText = `Sparkles collected: ${collected}/7`;
-      confetti(12);
-      if (collected >= 7) finishCatchGame();
-    };
-    area.appendChild(item);
-    setTimeout(() => item.remove(), 3100);
-    if (drops >= 15) clearInterval(interval);
-  }, 520);
-
-  setTimeout(() => {
-    if (collected < 7) finishCatchGame(true);
-  }, 9000);
-}
-
-function finishCatchGame() {
-  catchGameStarted = false;
-  document.getElementById("catchNote").style.display = "block";
-  document.getElementById("catchNote").innerText = collected >= 7
-    ? "Excellent.\nSparkle reserves secured."
-    : "Sparkle collection complete enough.\nThe birthday department is feeling generous today.";
-  document.getElementById("catchNext").style.display = "inline-block";
-  confetti(90);
-}
-
-function birthdayBag() {
-  const items = [
-    "Found: one invisible tiara. Very exclusive.",
-    "Found: emergency glitter. Unfortunately it will never leave.",
-    "Found: one tiny emotional support " + companionName.toLowerCase() + ".",
-    "Found: main character energy.",
-    "Found: friendship letter. Suspiciously sentimental.",
-    "Found: crown insurance. Necessary."
-  ];
-  const note = document.getElementById("bagNote");
+function openNote(text) {
+  const note = document.getElementById("letterNote");
   note.style.display = "block";
-  note.innerText = items[Math.floor(Math.random() * items.length)];
-  confetti(50);
+  note.innerText = text;
+  confetti(20);
 }
 
 function spinWheel() {
   const wheel = document.getElementById("wheel");
   const note = document.getElementById("wheelNote");
+
   const outcomes = [
-    "You have won: one birthday crown and unlimited attention.",
+    "You have won: unlimited attention.",
     "You have won: snack rights for the entire day.",
     "You have won: one dramatic entrance. Please use responsibly.",
     "You have won: compliments. Too many compliments. Legally concerning.",
@@ -1120,36 +936,8 @@ function spinWheel() {
   setTimeout(() => {
     note.style.display = "block";
     note.innerText = outcomes[Math.floor(Math.random() * outcomes.length)];
-    confetti(80);
+    confetti(70);
   }, 1200);
-}
-
-function findCompanion(choice) {
-  const note = document.getElementById("hideNote");
-  note.style.display = "block";
-
-  if (choice === hideSpot) {
-    note.innerText = `${companionEmoji}\n${companionName} located.\nMorale increased by 37%.`;
-    document.getElementById("hideNext").style.display = "inline-block";
-    confetti(90);
-  } else {
-    note.innerText = "No companion.\nVery disappointing.\nPlease continue the investigation.";
-    confetti(8);
-  }
-}
-
-function sarafBehaviour(text) {
-  const note = document.getElementById("behaviourNote");
-  note.style.display = "block";
-  note.innerText = text + "\nBehaviour logged.";
-  confetti(45);
-}
-
-function openNote(text) {
-  const note = document.getElementById("letterNote");
-  note.style.display = "block";
-  note.innerText = text;
-  confetti(25);
 }
 
 function startCounter() {
@@ -1171,30 +959,26 @@ function startCounter() {
   }, 330);
 }
 
-function updateCertificate() {
-  document.getElementById("certAnimal").innerText = `${companionEmoji} ${companionName}`;
-  document.getElementById("certCrown").innerText = crownApproved ? `Approved ${crownDecor} ${crownGem} 👑` : "Approved 👑";
-  document.getElementById("certSeal").innerText = `${crownGem}👑`;
-}
-
 function startParade() {
   const line = document.getElementById("paradeLine");
   const bubble = document.getElementById("songBubble");
-  line.innerText = `🎺 ${companionEmoji} 🐧 🦦 🐥 🦭 🐰 🦆 🎈 👑 💖 🌈`;
+
   line.classList.remove("marching");
   void line.offsetWidth;
   line.classList.add("marching");
 
   const words = ["HAP", "PY", "BIRTH", "DAY", "SA", "RAF", "💖"];
   let i = 0;
+
   const interval = setInterval(() => {
-    bubble.innerText = words[i] || "HAPPY BIRTHDAY SARAF 💖";
+    bubble.innerText = words[i] || "HAPPY BIRTHDAY SARAF";
     i++;
     if (i > words.length) clearInterval(interval);
   }, 650);
 
   playBirthdayTune();
-  confetti(200);
+  confetti(160);
+
   setTimeout(() => {
     document.getElementById("paradeNext").style.display = "inline-block";
   }, 7000);
@@ -1203,6 +987,7 @@ function startParade() {
 function playBirthdayTune() {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   if (!AudioContext) return;
+
   const ctx = new AudioContext();
   const notes = [
     264,264,297,264,352,330,
@@ -1210,6 +995,7 @@ function playBirthdayTune() {
     264,264,528,440,352,330,297,
     466,466,440,352,396,352
   ];
+
   notes.forEach((freq, i) => {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -1218,7 +1004,7 @@ function playBirthdayTune() {
     osc.connect(gain);
     gain.connect(ctx.destination);
     gain.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.22);
-    gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + i * 0.22 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + i * 0.22 + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.22 + 0.18);
     osc.start(ctx.currentTime + i * 0.22);
     osc.stop(ctx.currentTime + i * 0.22 + 0.2);
@@ -1235,54 +1021,42 @@ function claimCake() {
 
   setTimeout(() => {
     cake.style.display = "block";
-    confetti(230);
-  }, 900);
+    confetti(200);
+  }, 800);
 
   setTimeout(() => {
     finalText.style.display = "block";
-    confetti(270);
-  }, 1700);
+    confetti(240);
+  }, 1600);
 }
 
 function confetti(count) {
+  const colors = ["#ff4fa3", "#ffd166", "#a8ddff", "#bfa2ff", "#ffffff"];
   for (let i = 0; i < count; i++) {
     const piece = document.createElement("div");
     piece.classList.add("confetti");
     piece.style.left = Math.random() * 100 + "vw";
-    piece.style.background = ["#ff1493", "#ffd166", "#06d6a0", "#118ab2", "#9b5de5", "#ff8fab"][Math.floor(Math.random() * 6)];
-    piece.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (Math.random() * 1.8 + 2.2) + "s";
     document.body.appendChild(piece);
     setTimeout(() => piece.remove(), 3500);
   }
 }
 
-function sparkleBurst() {
-  const icons = ["✨", "⭐", "💖", "🌈", "🎀"];
-  for (let i = 0; i < 8; i++) {
-    const s = document.createElement("div");
-    s.classList.add("sparkle");
-    s.innerText = icons[Math.floor(Math.random() * icons.length)];
-    s.style.left = Math.random() * 100 + "vw";
-    s.style.top = Math.random() * 100 + "vh";
-    document.body.appendChild(s);
-    setTimeout(() => s.remove(), 1200);
-  }
-}
-
-function balloons() {
-  const emojis = ["🎈", "🎀", "⭐", "💖", "🎂", "✨", "🌈"];
+function floatingDecor() {
+  const icons = ["🎈", "✨", "💖", "🎀", "⭐"];
   setInterval(() => {
-    const b = document.createElement("div");
-    b.classList.add("balloon");
-    b.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    b.style.left = Math.random() * 100 + "vw";
-    b.style.animationDuration = (Math.random() * 5 + 6) + "s";
-    document.body.appendChild(b);
-    setTimeout(() => b.remove(), 10000);
-  }, 1400);
+    const el = document.createElement("div");
+    el.classList.add("floating");
+    el.innerText = icons[Math.floor(Math.random() * icons.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (Math.random() * 4 + 7) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 10000);
+  }, 1600);
 }
 
-balloons();
+floatingDecor();
 </script>
 
 </body>

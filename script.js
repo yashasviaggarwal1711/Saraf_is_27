@@ -5,8 +5,6 @@ let blown = 0;
 let geoIndex = 0;
 let popped = 0;
 let audioCtx = null;
-let musicStarted = false;
-let musicTimer = null;
 
 const questions = [
   {
@@ -59,7 +57,7 @@ function getAudio() {
   return audioCtx;
 }
 
-function tone(freq, start, duration, volume = 0.08, type = "triangle") {
+function tone(freq, start, duration, volume = 0.08, type = "sine") {
   const ctx = getAudio();
   if (!ctx) return;
 
@@ -80,46 +78,18 @@ function tone(freq, start, duration, volume = 0.08, type = "triangle") {
 }
 
 function soundChime() {
-  tone(659, 0, 0.13, 0.06);
-  tone(880, 0.09, 0.16, 0.05);
+  tone(659, 0, 0.13, 0.05, "sine");
+  tone(880, 0.09, 0.16, 0.045, "sine");
 }
 
 function soundBoop() {
-  tone(220, 0, 0.12, 0.06, "sine");
+  tone(220, 0, 0.12, 0.055, "sine");
 }
 
 function soundTwinkle() {
-  tone(784, 0, 0.12, 0.05);
-  tone(1046, 0.08, 0.16, 0.05);
-  tone(1318, 0.18, 0.18, 0.045);
-}
-
-function startBackgroundMusic() {
-  if (musicStarted) return;
-  const ctx = getAudio();
-  if (!ctx) return;
-
-  musicStarted = true;
-  document.getElementById("musicPill").style.display = "block";
-  document.getElementById("musicPill").innerText = "music: on";
-
-  const melody = [
-    392, 440, 523, 440,
-    392, 330, 392, 440,
-    523, 587, 523, 440,
-    392, 440, 392
-  ];
-
-  function playLoop() {
-    melody.forEach((freq, i) => {
-      tone(freq, i * 0.28, 0.20, 0.035, "triangle");
-    });
-  }
-
-  playLoop();
-  musicTimer = setInterval(playLoop, melody.length * 280 + 1000);
-  confetti(80);
-  soundTwinkle();
+  tone(784, 0, 0.12, 0.045, "sine");
+  tone(1046, 0.08, 0.16, 0.045, "sine");
+  tone(1318, 0.18, 0.18, 0.04, "sine");
 }
 
 function checkPassword() {
@@ -311,7 +281,7 @@ function startCounter() {
 
   const interval = setInterval(() => {
     counter.innerText = nums[i];
-    tone(300 + i * 90, 0, 0.08, 0.04);
+    tone(300 + i * 90, 0, 0.08, 0.035, "sine");
     i++;
     if (i >= nums.length) {
       clearInterval(interval);
@@ -331,21 +301,34 @@ function startParade() {
   void line.offsetWidth;
   line.classList.add("marching");
 
-  const words = ["HAP", "PY", "BIRTH", "DAY", "SA", "RAF", "💖"];
-  let i = 0;
+  const lyrics = [
+    "Haaaappy",
+    "Birthday",
+    "toooo",
+    "youuu",
+    "Happy",
+    "Birthday",
+    "dear",
+    "Saraaaaf",
+    "Happy",
+    "Birthday",
+    "to",
+    "youuu 💖"
+  ];
 
+  let i = 0;
   const interval = setInterval(() => {
-    bubble.innerText = words[i] || "HAPPY BIRTHDAY SARAF";
+    bubble.innerText = lyrics[i] || "HAPPY BIRTHDAY SARAF 💖";
     i++;
-    if (i > words.length) clearInterval(interval);
-  }, 650);
+    if (i > lyrics.length) clearInterval(interval);
+  }, 720);
 
   playBirthdayTune();
-  confetti(160);
+  confetti(170);
 
   setTimeout(() => {
     document.getElementById("paradeNext").style.display = "inline-block";
-  }, 9000);
+  }, 9500);
 }
 
 function playBirthdayTune() {
@@ -366,7 +349,8 @@ function playBirthdayTune() {
   let time = 0;
 
   notes.forEach((freq, i) => {
-    tone(freq, time, durations[i], 0.12, "triangle");
+    tone(freq, time, durations[i], 0.15, "sine");
+    tone(freq * 2, time + 0.01, durations[i] * 0.7, 0.035, "sine");
     time += durations[i] + 0.06;
   });
 }
@@ -381,13 +365,13 @@ function claimCake() {
 
   setTimeout(() => {
     cake.style.display = "block";
-    confetti(200);
+    confetti(220);
     soundTwinkle();
   }, 800);
 
   setTimeout(() => {
     finalText.style.display = "block";
-    confetti(240);
+    confetti(260);
     playBirthdayTune();
   }, 1600);
 }
@@ -434,7 +418,7 @@ function floatingDecor() {
     el.style.animationDuration = (Math.random() * 4 + 7) + "s";
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 10000);
-  }, 1600);
+  }, 1700);
 }
 
 floatingDecor();

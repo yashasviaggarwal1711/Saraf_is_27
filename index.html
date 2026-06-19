@@ -8,11 +8,9 @@
 </head>
 
 <body>
-
-<div class="music-pill" id="musicPill">music: off</div>
-
 <div class="page active" id="page0">
-  <div class="card">
+  <div class="card access-card">
+    <div class="mini-label">classified birthday material</div>
     <h1>🔒 Birthday Access</h1>
     <p>This website contains sensitive birthday information.</p>
     <p>Access is restricted to authorised birthday girls only.</p>
@@ -26,12 +24,12 @@
 
 <div class="page" id="page1">
   <div class="card hero-card">
+    <div class="mini-label">official saraf day portal</div>
     <h1>🎂 IT IS SARAF DAY</h1>
     <p>Nobody panic.</p>
     <p>The birthday girl has arrived.</p>
     <p class="tiny">This website was made with an unreasonable amount of love.</p>
     <button class="primary" onclick="nextPage(2)">ENTER THE BIRTHDAY ZONE</button>
-    <button class="secondary" onclick="startBackgroundMusic()">START BIRTHDAY MUSIC 🎵</button>
     <button class="secondary" onclick="secretSparkle()">SECRET SPARKLE BUTTON ✨</button>
     <div class="footer">Powered by friendship™</div>
   </div>
@@ -39,6 +37,7 @@
 
 <div class="page" id="page2">
   <div class="card">
+    <div class="mini-label">step 1</div>
     <h2>🎈 Birthday Check-In</h2>
     <p><b>Birthday Readiness Meter</b></p>
     <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
@@ -51,6 +50,7 @@
 
 <div class="page" id="page3">
   <div class="card">
+    <div class="mini-label">wish department</div>
     <h2>🎂 Candle Ceremony</h2>
     <p>Please tap the candles to make birthday wishes.</p>
     <p>We take wishes very seriously around here.</p>
@@ -70,6 +70,7 @@
 
 <div class="page" id="page4">
   <div class="card">
+    <div class="mini-label">slightly emotional division</div>
     <h2>🌎 Long Distance Birthday Department</h2>
     <p id="geoText">If I could choose one thing today, it would be celebrating with you in person.</p>
     <button onclick="geoNext()">Next</button>
@@ -79,6 +80,7 @@
 
 <div class="page" id="page5">
   <div class="card">
+    <div class="mini-label">very serious work</div>
     <h2>🎈 Balloon Popping Round</h2>
     <p>Before proceeding, please pop 5 birthday balloons.</p>
     <p><b id="popCount">Balloons popped: 0/5</b></p>
@@ -90,6 +92,7 @@
 
 <div class="page" id="page6">
   <div class="card">
+    <div class="mini-label">birthday mail room</div>
     <h2>💌 Letters For Saraf</h2>
     <p>Some messages arrived for the birthday girl.</p>
     <p>Please open responsibly.</p>
@@ -112,9 +115,13 @@
 
 <div class="page" id="page7">
   <div class="card">
+    <div class="mini-label">random prize generator</div>
     <h2>🎡 Birthday Wheel</h2>
     <p>Let us see what the birthday authorities have assigned you.</p>
-    <div class="wheel" id="wheel">🎂</div>
+    <div class="wheel-wrap">
+      <div class="wheel-pointer">▼</div>
+      <div class="wheel" id="wheel">🎂</div>
+    </div>
     <button onclick="spinWheel()">SPIN</button>
     <div class="note" id="wheelNote"></div>
     <button class="primary" onclick="nextPage(8)">Continue</button>
@@ -123,6 +130,7 @@
 
 <div class="page" id="page8">
   <div class="card">
+    <div class="mini-label">scientific measurement</div>
     <h2>📊 Friendship Meter</h2>
     <p>Measuring friendship. Please stand dramatically.</p>
     <button onclick="startCounter()">MEASURE</button>
@@ -134,6 +142,7 @@
 
 <div class="page" id="page9">
   <div class="card">
+    <div class="mini-label">formal documentation</div>
     <h2>🏆 Certificate Incoming</h2>
     <p>Birthday procedures complete.</p>
     <p>Generating official documentation...</p>
@@ -143,6 +152,12 @@
 
 <div class="page" id="page10">
   <div class="certificate">
+    <div class="cert-corner top-left">❦</div>
+    <div class="cert-corner top-right">❦</div>
+    <div class="cert-corner bottom-left">❦</div>
+    <div class="cert-corner bottom-right">❦</div>
+
+    <div class="cert-kicker">Department of Birthday Affairs</div>
     <h1 class="cert-title">OFFICIAL CERTIFICATE OF EXTREME IMPORTANCE</h1>
     <p>This certifies that</p>
     <div class="cert-name">SARAF</div>
@@ -172,12 +187,14 @@
 </div>
 
 <div class="page" id="page11">
-  <div class="card">
+  <div class="card stage-card">
+    <div class="mini-label">grand musical finale begins</div>
     <h2>🎺 Animal Birthday Parade</h2>
     <p>The birthday parade has arrived. Obviously.</p>
     <button class="primary" onclick="startParade()">START BIRTHDAY SONG</button>
 
     <div class="paradeStage">
+      <div class="stage-lights">✦ ✦ ✦</div>
       <div class="songBubble" id="songBubble">Ready when you are.</div>
       <div class="paradeLine" id="paradeLine">🎺 🐧 🎺 🦆 🎺 🐰 🎺 🦭 🎺 🐥 🎈 👑 💖</div>
     </div>
@@ -187,7 +204,8 @@
 </div>
 
 <div class="page" id="page12">
-  <div class="card">
+  <div class="card final-card">
+    <div class="mini-label">grand finale</div>
     <h1>🎂 FINAL BIRTHDAY DEPLOYMENT</h1>
     <p>The Department has reviewed your file.</p>
     <p>It has concluded that a normal amount of celebration would be insufficient.</p>
@@ -196,7 +214,7 @@
 
     <div class="finalCakeWrap" id="finalCakeWrap">
       <div class="bigCake">
-        <div style="font-size:3rem;">👑</div>
+        <div class="cake-crown">👑</div>
         <div class="candleRow">
           <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
           <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>

@@ -47,7 +47,7 @@ body {
 
 .card {
   width: min(860px, 100%);
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.92);
   border: 3px solid rgba(255, 79, 163, 0.35);
   border-radius: 34px;
   padding: 34px 26px;
@@ -144,9 +144,7 @@ input {
   color: var(--ink);
 }
 
-input:focus {
-  border-color: var(--pink);
-}
+input:focus { border-color: var(--pink); }
 
 .note {
   display: none;
@@ -199,10 +197,29 @@ input:focus {
   box-shadow: 0 13px 0 #ffd4e8;
 }
 
+.tile.opened {
+  background: #fff7fb;
+  border-color: var(--gold);
+}
+
 .emoji {
   display: block;
   font-size: 2.7rem;
   margin-bottom: 8px;
+}
+
+.music-pill {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  background: white;
+  border: 2px solid var(--pink);
+  border-radius: 999px;
+  padding: 8px 12px;
+  box-shadow: 0 6px 18px rgba(57, 32, 68, 0.12);
+  font-size: 0.9rem;
+  display: none;
 }
 
 .floating {
@@ -230,6 +247,19 @@ input:focus {
 
 @keyframes fall {
   to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.sparkle-pop {
+  position: fixed;
+  pointer-events: none;
+  z-index: 998;
+  font-size: 1.8rem;
+  animation: sparklePop 1s ease-out forwards;
+}
+
+@keyframes sparklePop {
+  from { transform: scale(0.3); opacity: 1; }
+  to { transform: scale(1.8) rotate(90deg); opacity: 0; }
 }
 
 .cake {
@@ -507,7 +537,7 @@ input:focus {
   .page { display: none !important; }
   #page10 { display: flex !important; padding: 0; }
   .certificate { box-shadow: none; width: 100%; border-radius: 0; }
-  button, .floating, .confetti, .footer { display: none !important; }
+  button, .floating, .confetti, .footer, .music-pill { display: none !important; }
 }
 
 @media (max-width: 560px) {
@@ -520,6 +550,8 @@ input:focus {
 </head>
 
 <body>
+
+<div class="music-pill" id="musicPill">music: off</div>
 
 <div class="page active" id="page0">
   <div class="card">
@@ -541,6 +573,8 @@ input:focus {
     <p>The birthday girl has arrived.</p>
     <p class="tiny">This website was made with an unreasonable amount of love.</p>
     <button class="primary" onclick="nextPage(2)">ENTER THE BIRTHDAY ZONE</button>
+    <button class="secondary" onclick="startBackgroundMusic()">START BIRTHDAY MUSIC 🎵</button>
+    <button class="secondary" onclick="secretSparkle()">SECRET SPARKLE BUTTON ✨</button>
     <div class="footer">Powered by friendship™</div>
   </div>
 </div>
@@ -603,14 +637,14 @@ input:focus {
     <p>Please open responsibly.</p>
 
     <div class="grid">
-      <div class="tile" onclick="openNote('Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
-      <div class="tile" onclick="openNote('One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
-      <div class="tile" onclick="openNote('Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
-      <div class="tile" onclick="openNote('One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
-      <div class="tile" onclick="openNote('The birthday committee has completed its review. They have concluded that you deserve presents, attention, snacks and more attention.')"><span class="emoji">🎀</span>Birthday notice</div>
-      <div class="tile" onclick="openNote('Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
-      <div class="tile" onclick="openNote('Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
-      <div class="tile" onclick="openNote('I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
+      <div class="tile" onclick="openNote(this, 'Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
+      <div class="tile" onclick="openNote(this, 'One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
+      <div class="tile" onclick="openNote(this, 'Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
+      <div class="tile" onclick="openNote(this, 'One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
+      <div class="tile" onclick="openNote(this, 'The birthday committee has completed its review. They have concluded that you deserve presents, attention, snacks and more attention.')"><span class="emoji">🎀</span>Birthday notice</div>
+      <div class="tile" onclick="openNote(this, 'Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
+      <div class="tile" onclick="openNote(this, 'Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
+      <div class="tile" onclick="openNote(this, 'I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
     </div>
 
     <div class="note" id="letterNote"></div>
@@ -733,6 +767,9 @@ let questionIndex = 0;
 let blown = 0;
 let geoIndex = 0;
 let popped = 0;
+let audioCtx = null;
+let musicStarted = false;
+let musicTimer = null;
 
 const questions = [
   {
@@ -776,6 +813,78 @@ const geoLines = [
   "But it does have significantly more confetti than I do."
 ];
 
+function getAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return null;
+    audioCtx = new AudioContext();
+  }
+  return audioCtx;
+}
+
+function tone(freq, start, duration, volume = 0.08, type = "triangle") {
+  const ctx = getAudio();
+  if (!ctx) return;
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = type;
+  osc.frequency.value = freq;
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime + start);
+  gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + start + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + duration);
+
+  osc.start(ctx.currentTime + start);
+  osc.stop(ctx.currentTime + start + duration + 0.03);
+}
+
+function soundChime() {
+  tone(659, 0, 0.13, 0.06);
+  tone(880, 0.09, 0.16, 0.05);
+}
+
+function soundBoop() {
+  tone(220, 0, 0.12, 0.06, "sine");
+}
+
+function soundTwinkle() {
+  tone(784, 0, 0.12, 0.05);
+  tone(1046, 0.08, 0.16, 0.05);
+  tone(1318, 0.18, 0.18, 0.045);
+}
+
+function startBackgroundMusic() {
+  if (musicStarted) return;
+  const ctx = getAudio();
+  if (!ctx) return;
+
+  musicStarted = true;
+  document.getElementById("musicPill").style.display = "block";
+  document.getElementById("musicPill").innerText = "music: on";
+
+  const melody = [
+    392, 440, 523, 440,
+    392, 330, 392, 440,
+    523, 587, 523, 440,
+    392, 440, 392
+  ];
+
+  function playLoop() {
+    melody.forEach((freq, i) => {
+      tone(freq, i * 0.28, 0.20, 0.035, "triangle");
+    });
+  }
+
+  playLoop();
+  musicTimer = setInterval(playLoop, melody.length * 280 + 1000);
+  confetti(80);
+  soundTwinkle();
+}
+
 function checkPassword() {
   const input = document.getElementById("passwordInput").value.trim().toUpperCase();
   const note = document.getElementById("passwordNote");
@@ -784,9 +893,11 @@ function checkPassword() {
   if (input === PASSWORD) {
     note.innerText = "Password accepted.\nBirthday access granted.";
     confetti(100);
+    soundChime();
     setTimeout(() => nextPage(1), 800);
   } else {
     note.innerText = "Identity could not be verified.\nAre you sure you are Saraf?";
+    soundBoop();
   }
 }
 
@@ -795,6 +906,7 @@ function nextPage(num) {
   document.getElementById("page" + num).classList.add("active");
   window.scrollTo(0, 0);
   confetti(18);
+  if (num !== 10) soundChime();
 
   if (num === 2) showQuestion();
   if (num === 5) setupBalloonGame();
@@ -829,10 +941,12 @@ function answerQuestion(text, correct) {
 
   if (!correct) {
     confetti(6);
+    soundBoop();
     return;
   }
 
   confetti(35);
+  soundChime();
 
   if (questionIndex === questions.length - 1) {
     document.getElementById("progressFill").style.width = "100%";
@@ -855,6 +969,7 @@ function blowCandle(el) {
 
   const box = document.getElementById("candleMessage");
   box.style.display = "block";
+  soundTwinkle();
 
   if (blown === 1) box.innerText = "⭐ Wish received.";
   if (blown === 2) box.innerText = "⭐ Extra wish received.";
@@ -870,9 +985,11 @@ function geoNext() {
   if (geoIndex < geoLines.length) {
     text.innerText = geoLines[geoIndex];
     geoIndex++;
+    soundChime();
   } else {
     document.getElementById("geoBtn").style.display = "inline-block";
     confetti(50);
+    soundTwinkle();
   }
 }
 
@@ -901,20 +1018,25 @@ function popBalloon(el) {
   popped++;
   document.getElementById("popCount").innerText = `Balloons popped: ${popped}/5`;
   confetti(15);
+  soundBoop();
 
   if (popped >= 5) {
     document.getElementById("popNote").style.display = "block";
     document.getElementById("popNote").innerText = "Excellent.\nBalloon destruction licence granted.";
     document.getElementById("popNext").style.display = "inline-block";
     confetti(70);
+    soundTwinkle();
   }
 }
 
-function openNote(text) {
+function openNote(tile, text) {
+  tile.classList.add("opened");
+  tile.querySelector(".emoji").innerText = "💖";
   const note = document.getElementById("letterNote");
   note.style.display = "block";
   note.innerText = text;
   confetti(20);
+  soundChime();
 }
 
 function spinWheel() {
@@ -933,10 +1055,13 @@ function spinWheel() {
   void wheel.offsetWidth;
   wheel.classList.add("spin");
 
+  soundTwinkle();
+
   setTimeout(() => {
     note.style.display = "block";
     note.innerText = outcomes[Math.floor(Math.random() * outcomes.length)];
     confetti(70);
+    soundChime();
   }, 1200);
 }
 
@@ -949,12 +1074,14 @@ function startCounter() {
 
   const interval = setInterval(() => {
     counter.innerText = nums[i];
+    tone(300 + i * 90, 0, 0.08, 0.04);
     i++;
     if (i >= nums.length) {
       clearInterval(interval);
       note.style.display = "block";
       note.innerText = "Friendship exceeds measuring equipment.";
       confetti(90);
+      soundTwinkle();
     }
   }, 330);
 }
@@ -985,10 +1112,6 @@ function startParade() {
 }
 
 function playBirthdayTune() {
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-
-  const ctx = new AudioContext();
   const notes = [
     264,264,297,264,352,330,
     264,264,297,264,396,352,
@@ -997,17 +1120,7 @@ function playBirthdayTune() {
   ];
 
   notes.forEach((freq, i) => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.frequency.value = freq;
-    osc.type = "triangle";
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.22);
-    gain.gain.exponentialRampToValueAtTime(0.10, ctx.currentTime + i * 0.22 + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.22 + 0.18);
-    osc.start(ctx.currentTime + i * 0.22);
-    osc.stop(ctx.currentTime + i * 0.22 + 0.2);
+    tone(freq, i * 0.22, 0.18, 0.10, "triangle");
   });
 }
 
@@ -1022,12 +1135,20 @@ function claimCake() {
   setTimeout(() => {
     cake.style.display = "block";
     confetti(200);
+    soundTwinkle();
   }, 800);
 
   setTimeout(() => {
     finalText.style.display = "block";
     confetti(240);
+    playBirthdayTune();
   }, 1600);
+}
+
+function secretSparkle() {
+  confetti(130);
+  sparkleBurst(24);
+  soundTwinkle();
 }
 
 function confetti(count) {
@@ -1040,6 +1161,19 @@ function confetti(count) {
     piece.style.animationDuration = (Math.random() * 1.8 + 2.2) + "s";
     document.body.appendChild(piece);
     setTimeout(() => piece.remove(), 3500);
+  }
+}
+
+function sparkleBurst(count = 12) {
+  const icons = ["✨", "⭐", "💖", "🎀"];
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle-pop";
+    s.innerText = icons[Math.floor(Math.random() * icons.length)];
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.top = Math.random() * 100 + "vh";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1100);
   }
 }
 

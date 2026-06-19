@@ -24,7 +24,7 @@ body {
 .page {
   display: none;
   min-height: 100vh;
-  padding: 30px 18px;
+  padding: 28px 16px;
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -36,13 +36,13 @@ body {
 .page.active { display: flex; }
 
 .card, .certificate {
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.93);
   border: 5px dashed #ff1493;
   border-radius: 34px;
   padding: 28px;
-  max-width: 820px;
+  max-width: 860px;
   width: 100%;
-  box-shadow: 0 14px 35px rgba(0,0,0,0.2);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.22);
   z-index: 2;
 }
 
@@ -67,6 +67,10 @@ h2 {
 
 p { font-size: 1.2rem; line-height: 1.45; }
 
+button, input {
+  font-family: inherit;
+}
+
 button {
   border: none;
   border-radius: 999px;
@@ -90,6 +94,16 @@ button {
 button:hover { transform: scale(1.07) rotate(-1deg); }
 button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
 
+input {
+  width: min(90%, 360px);
+  border: 4px solid #ff1493;
+  border-radius: 999px;
+  padding: 16px 20px;
+  font-size: 1.2rem;
+  text-align: center;
+  outline: none;
+}
+
 .note {
   background: #fff9c4;
   border: 3px dotted #ff1493;
@@ -100,6 +114,8 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
   display: none;
   white-space: pre-line;
 }
+
+.tiny { font-size: 0.95rem; opacity: 0.8; }
 
 .progress {
   background: #ffe5ec;
@@ -157,6 +173,55 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
   to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.tile {
+  background: #fff;
+  border: 3px solid #ff1493;
+  border-radius: 20px;
+  padding: 18px 10px;
+  min-height: 120px;
+  cursor: pointer;
+  box-shadow: 0 7px 0 #ffb3c6;
+  transition: 0.2s;
+}
+
+.tile:hover { transform: translateY(-7px) rotate(2deg); }
+
+.emoji {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.companion-badge {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  background: white;
+  border: 3px solid #ff1493;
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 1.6rem;
+  z-index: 20;
+  box-shadow: 0 6px 0 #ffb3c6;
+  display: none;
+}
+
+.crownPreview {
+  font-size: 5rem;
+  margin: 15px;
+  background: #fff9c4;
+  border: 4px dotted #ff1493;
+  border-radius: 30px;
+  padding: 20px;
+}
+
 .cake {
   position: relative;
   width: 290px;
@@ -201,12 +266,8 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
 .candle:nth-child(2) { left: 133px; }
 .candle:nth-child(3) { left: 191px; }
 
-.flame {
+.flame, .miniCandle::before {
   position: absolute;
-  top: -27px;
-  left: 2px;
-  width: 20px;
-  height: 28px;
   background: #ffd166;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
@@ -214,47 +275,26 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
   box-shadow: 0 0 22px #ffd166;
 }
 
+.flame {
+  top: -27px;
+  left: 2px;
+  width: 20px;
+  height: 28px;
+}
+
 @keyframes flicker {
   from { transform: rotate(-45deg) scale(1); }
-  to { transform: rotate(-45deg) scale(1.2); }
+  to { transform: rotate(-45deg) scale(1.22); }
 }
 
 .out .flame { display: none; }
 
-.mini-grid, .envelope-grid, .frog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
-}
-
-.mini-card, .envelope, .frog-box {
-  background: #fff;
-  border: 3px solid #ff1493;
-  border-radius: 20px;
-  padding: 18px 10px;
-  min-height: 120px;
-  cursor: pointer;
-  box-shadow: 0 7px 0 #ffb3c6;
-  transition: 0.2s;
-}
-
-.mini-card:hover, .envelope:hover, .frog-box:hover {
-  transform: translateY(-7px) rotate(2deg);
-}
-
-.emoji {
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
 .pop-area, .catch-area {
   position: relative;
-  height: 360px;
+  height: 340px;
   border: 4px dashed #4cc9f0;
   border-radius: 25px;
-  background: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.58);
   overflow: hidden;
   margin-top: 20px;
 }
@@ -271,15 +311,15 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
   to { transform: translateY(-12px); }
 }
 
-.fallingCake {
+.fallingItem {
   position: absolute;
   top: -50px;
   font-size: 2.5rem;
   cursor: pointer;
-  animation: cakeFall 3s linear forwards;
+  animation: fallItem 3s linear forwards;
 }
 
-@keyframes cakeFall {
+@keyframes fallItem {
   to { transform: translateY(430px); }
 }
 
@@ -322,6 +362,87 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
   font-weight: bold;
 }
 
+.certificate {
+  background: #fffdf7;
+  border: 12px double #c58b00;
+  box-shadow: 0 0 0 8px #fff176, 0 18px 35px rgba(0,0,0,0.25);
+  color: #2b1642;
+  max-width: 900px;
+}
+
+.cert-title {
+  color: #7b2cbf;
+  text-shadow: none;
+  animation: none;
+  font-size: clamp(2rem, 6vw, 4rem);
+}
+
+.cert-name {
+  font-size: clamp(2.8rem, 9vw, 5.5rem);
+  color: #ff1493;
+  margin: 8px 0;
+  border-bottom: 4px solid #c58b00;
+  display: inline-block;
+  padding: 0 25px;
+}
+
+.cert-list {
+  text-align: left;
+  display: inline-block;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.seal {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff176, #ffd166, #c58b00);
+  border: 5px solid #a66a00;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transform: rotate(-8deg);
+}
+
+.paradeStage {
+  height: 230px;
+  border: 4px dashed #ff1493;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.65);
+  overflow: hidden;
+  position: relative;
+  margin-top: 20px;
+}
+
+.paradeLine {
+  position: absolute;
+  left: -900px;
+  top: 70px;
+  font-size: 3rem;
+  white-space: nowrap;
+}
+
+.marching { animation: march 9s linear forwards; }
+
+@keyframes march {
+  to { left: 105%; }
+}
+
+.songBubble {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.4rem;
+  background: #fff9c4;
+  border: 3px dotted #ff1493;
+  border-radius: 999px;
+  padding: 12px 20px;
+}
+
 .finalCakeWrap {
   display: none;
   margin-top: 25px;
@@ -335,7 +456,7 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
 
 .bigCake {
   margin: auto;
-  width: min(92vw, 520px);
+  width: min(92vw, 530px);
   text-align: center;
   filter: drop-shadow(0 12px 14px rgba(0,0,0,0.2));
 }
@@ -357,16 +478,10 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
 
 .miniCandle::before {
   content: "";
-  position: absolute;
   top: -24px;
   left: 2px;
   width: 15px;
   height: 24px;
-  background: #ffd166;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  animation: flicker 0.35s infinite alternate;
-  box-shadow: 0 0 20px #ffd166;
 }
 
 .tier {
@@ -385,33 +500,69 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
 .tier3 { width: 84%; background: #caffbf; }
 .tier4 { width: 100%; background: #ffd6a5; }
 
-.finalText {
-  display: none;
-  margin-top: 20px;
+.finalText { display: none; margin-top: 20px; }
+
+@media print {
+  body { background: white; }
+  .page { display: none !important; }
+  #page16 { display: flex !important; }
+  button, .companion-badge, .balloon, .confetti, .sparkle { display: none !important; }
+  .certificate { box-shadow: none; }
 }
 
 @media (max-width: 520px) {
   .card, .certificate { padding: 20px; }
   button { width: 90%; }
   .tier { height: 60px; }
-  .pop-area, .catch-area { height: 320px; }
+  .pop-area, .catch-area { height: 310px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="page active" id="page1">
+<div class="companion-badge" id="companionBadge">🐧</div>
+
+<div class="page active" id="page0">
+  <div class="card">
+    <h1>🔒 Restricted Birthday Access</h1>
+    <p>This website contains sensitive birthday information.</p>
+    <p>Access is restricted to authorised birthday girls only.</p>
+    <input id="passwordInput" placeholder="enter birthday password" />
+    <br />
+    <button onclick="checkPassword()">VERIFY IDENTITY</button>
+    <div class="note" id="passwordNote"></div>
+  </div>
+</div>
+
+<div class="page" id="page1">
   <div class="card">
     <h1>🎂 IT IS SARAF DAY 🎂</h1>
     <p>Nobody panic.</p>
     <p>The birthday girl has arrived.</p>
     <p class="tiny">This website was made with an unreasonable amount of love.</p>
-    <button onclick="nextPage(2)">ENTER THE BIRTHDAY ZONE</button>
+    <button onclick="nextPage(2)">BEGIN BIRTHDAY PROCEDURES</button>
   </div>
 </div>
 
 <div class="page" id="page2">
+  <div class="card">
+    <h2>🐧 Choose Your Birthday Companion</h2>
+    <p>Please select one creature to accompany you through official birthday proceedings.</p>
+    <div class="grid">
+      <div class="tile" onclick="chooseCompanion('🐧','Penguin')"><span class="emoji">🐧</span>Penguin</div>
+      <div class="tile" onclick="chooseCompanion('🦦','Otter')"><span class="emoji">🦦</span>Otter</div>
+      <div class="tile" onclick="chooseCompanion('🐥','Chick')"><span class="emoji">🐥</span>Chick</div>
+      <div class="tile" onclick="chooseCompanion('🦭','Seal')"><span class="emoji">🦭</span>Seal</div>
+      <div class="tile" onclick="chooseCompanion('🐰','Bunny')"><span class="emoji">🐰</span>Bunny</div>
+      <div class="tile" onclick="chooseCompanion('🦆','Duck')"><span class="emoji">🦆</span>Duck</div>
+    </div>
+    <div class="note" id="companionNote"></div>
+    <button id="companionNext" style="display:none" onclick="nextPage(3)">Continue</button>
+  </div>
+</div>
+
+<div class="page" id="page3">
   <div class="card">
     <h2>🎈 Birthday Check-In</h2>
     <p><b>Birthday Readiness Meter</b></p>
@@ -419,11 +570,33 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
     <div id="questionArea"></div>
     <div class="note" id="checkMessage"></div>
     <button id="nextQuestionBtn" style="display:none" onclick="nextQuestion()">Next question</button>
-    <button id="cakeCeremonyBtn" style="display:none" onclick="nextPage(3)">BEGIN THE CAKE CEREMONY 🎂</button>
+    <button id="checkNext" style="display:none" onclick="nextPage(4)">Proceed to Crown Studio 👑</button>
   </div>
 </div>
 
-<div class="page" id="page3">
+<div class="page" id="page4">
+  <div class="card">
+    <h2>👑 Royal Crown Design Studio</h2>
+    <p>Every birthday girl requires official headwear.</p>
+    <div class="crownPreview" id="crownPreview">👑</div>
+    <p><b>Choose gems</b></p>
+    <button onclick="setCrown('💖')">Pink hearts</button>
+    <button onclick="setCrown('💙')">Blue gems</button>
+    <button onclick="setCrown('💜')">Purple gems</button>
+    <button onclick="setCrown('💚')">Green gems</button>
+    <button onclick="setCrown('🌈')">Rainbow chaos</button>
+    <p><b>Add decoration</b></p>
+    <button onclick="addDecor('⭐')">Stars</button>
+    <button onclick="addDecor('🎀')">Bows</button>
+    <button onclick="addDecor('✨')">Sparkles</button>
+    <button onclick="addDecor('💖')">More hearts</button>
+    <div class="note" id="crownNote"></div>
+    <button onclick="approveCrown()">APPROVE CROWN</button>
+    <button id="crownNext" style="display:none" onclick="nextPage(5)">Continue</button>
+  </div>
+</div>
+
+<div class="page" id="page5">
   <div class="card">
     <h2>🎂 Candle Ceremony</h2>
     <p>Please tap the candles to make birthday wishes. We take wishes very seriously around here.</p>
@@ -435,169 +608,220 @@ button:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9184a; }
       <div class="cake-base"></div>
     </div>
     <div class="note" id="candleMessage"></div>
-    <button id="afterCandles" style="display:none" onclick="nextPage(4)">Continue</button>
+    <button id="afterCandles" style="display:none" onclick="nextPage(6)">Continue</button>
   </div>
 </div>
 
-<div class="page" id="page4">
+<div class="page" id="page6">
   <div class="card">
     <h2>🌎 Long Distance Birthday Department</h2>
     <p id="geoText">If I could choose one thing today, it would be celebrating with you in person.</p>
     <button onclick="geoNext()">Next</button>
-    <button id="geoBtn" style="display:none" onclick="nextPage(5)">ACCEPT DIGITAL AFFECTION 💖</button>
+    <button id="geoBtn" style="display:none" onclick="nextPage(7)">ACCEPT DIGITAL AFFECTION 💖</button>
   </div>
 </div>
 
-<div class="page" id="page5">
+<div class="page" id="page7">
   <div class="card">
     <h2>🎈 Balloon Popping Round</h2>
     <p>Before proceeding, please pop 5 birthday balloons.</p>
     <p><b id="popCount">Balloons popped: 0/5</b></p>
     <div class="pop-area" id="popArea"></div>
     <div class="note" id="popNote"></div>
-    <button id="popNext" style="display:none" onclick="nextPage(6)">Proceed</button>
-  </div>
-</div>
-
-<div class="page" id="page6">
-  <div class="card">
-    <h2>🍰 Catch The Cake</h2>
-    <p>Tap 7 falling cakes. This is important birthday work.</p>
-    <p><b id="cakeScore">Cake collected: 0/7</b></p>
-    <button onclick="startCakeGame()">START CAKE COLLECTION</button>
-    <div class="catch-area" id="catchArea"></div>
-    <div class="note" id="cakeGameNote"></div>
-    <button id="cakeGameNext" style="display:none" onclick="nextPage(7)">Continue</button>
-  </div>
-</div>
-
-<div class="page" id="page7">
-  <div class="card">
-    <h2>🐸 Find The Birthday Frog</h2>
-    <p>One gift box contains the official birthday frog. Choose wisely.</p>
-    <div class="frog-grid">
-      <div class="frog-box" onclick="findFrog(0)">🎁</div>
-      <div class="frog-box" onclick="findFrog(1)">🎁</div>
-      <div class="frog-box" onclick="findFrog(2)">🎁</div>
-      <div class="frog-box" onclick="findFrog(3)">🎁</div>
-    </div>
-    <div class="note" id="frogNote"></div>
-    <button id="frogNext" style="display:none" onclick="nextPage(8)">Continue</button>
+    <button id="popNext" style="display:none" onclick="nextPage(8)">Proceed</button>
   </div>
 </div>
 
 <div class="page" id="page8">
   <div class="card">
-    <h2>🌈 Birthday Mood Selector</h2>
-    <p>Please select today’s official birthday mood.</p>
-    <div class="mini-grid">
-      <div class="mini-card" onclick="moodPick('Excellent. Sparkly menace mode has been activated.')"><span class="emoji">✨</span>Sparkly menace</div>
-      <div class="mini-card" onclick="moodPick('Correct. Tiny child at a birthday party mode confirmed.')"><span class="emoji">🎈</span>Tiny birthday child</div>
-      <div class="mini-card" onclick="moodPick('Approved. Main character with cake privileges.')"><span class="emoji">👑</span>Main character</div>
-      <div class="mini-card" onclick="moodPick('Valid. Emotionally attached to cake is a respectable position.')"><span class="emoji">🍰</span>Cake dependent</div>
-    </div>
-    <div class="note" id="moodNote"></div>
-    <button onclick="nextPage(9)">Continue</button>
+    <h2>🌟 Catch The Sparkles</h2>
+    <p>Tap 7 falling sparkles. This is important birthday administration.</p>
+    <p><b id="catchScore">Sparkles collected: 0/7</b></p>
+    <button onclick="startCatchGame()">START SPARKLE COLLECTION</button>
+    <div class="catch-area" id="catchArea"></div>
+    <div class="note" id="catchNote"></div>
+    <button id="catchNext" style="display:none" onclick="nextPage(9)">Continue</button>
   </div>
 </div>
 
 <div class="page" id="page9">
+  <div class="card">
+    <h2>👜 What's In Saraf's Birthday Bag?</h2>
+    <p>Click the bag. Receive highly necessary birthday items.</p>
+    <div class="giftMachine">👜</div>
+    <button onclick="birthdayBag()">CHECK BAG</button>
+    <div class="note" id="bagNote"></div>
+    <button onclick="nextPage(10)">Continue</button>
+  </div>
+</div>
+
+<div class="page" id="page10">
   <div class="card">
     <h2>🎡 Spin The Birthday Wheel</h2>
     <p>Let us see what the birthday authorities have assigned you.</p>
     <div class="wheel" id="wheel">🎂</div>
     <button onclick="spinWheel()">SPIN</button>
     <div class="note" id="wheelNote"></div>
-    <button onclick="nextPage(10)">Next</button>
-  </div>
-</div>
-
-<div class="page" id="page10">
-  <div class="card">
-    <h2>🎁 Tiny Gift Machine</h2>
-    <p>Press the button. Receive nonsense. This is how birthdays work.</p>
-    <div class="giftMachine">🎁</div>
-    <button onclick="giftMachine()">DISPENSE GIFT</button>
-    <div class="note" id="giftNote"></div>
-    <button onclick="nextPage(11)">Open letters</button>
+    <button onclick="nextPage(11)">Next</button>
   </div>
 </div>
 
 <div class="page" id="page11">
   <div class="card">
-    <h2>💌 Letters For Saraf</h2>
-    <p>Some messages arrived for the birthday girl. Please open responsibly.</p>
-    <div class="envelope-grid">
-      <div class="envelope" onclick="openNote('Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
-      <div class="envelope" onclick="openNote('One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
-      <div class="envelope" onclick="openNote('Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
-      <div class="envelope" onclick="openNote('One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
-      <div class="envelope" onclick="openNote('The birthday committee has completed its review. They have concluded that you deserve cake, presents, attention and more cake.')"><span class="emoji">🎂</span>Birthday notice</div>
-      <div class="envelope" onclick="openNote('Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
-      <div class="envelope" onclick="openNote('Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
-      <div class="envelope" onclick="openNote('I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
+    <h2 id="hideSeekTitle">🐧 Find Your Birthday Companion</h2>
+    <p>Your companion is hiding. Very childish behaviour. Please locate them.</p>
+    <div class="grid">
+      <div class="tile" onclick="findCompanion(0)">🎁</div>
+      <div class="tile" onclick="findCompanion(1)">🎁</div>
+      <div class="tile" onclick="findCompanion(2)">🎁</div>
+      <div class="tile" onclick="findCompanion(3)">🎁</div>
     </div>
-    <div class="note" id="letterNote"></div>
-    <button onclick="nextPage(12)">Next birthday procedure</button>
+    <div class="note" id="hideNote"></div>
+    <button id="hideNext" style="display:none" onclick="nextPage(12)">Continue</button>
   </div>
 </div>
 
 <div class="page" id="page12">
+  <div class="card">
+    <h2>🎭 Saraf Behaviour Detector</h2>
+    <p>Which behaviour has been detected today?</p>
+    <div class="grid">
+      <div class="tile" onclick="sarafBehaviour('Being adorable by accident has been logged.')"><span class="emoji">✨</span>Adorable by accident</div>
+      <div class="tile" onclick="sarafBehaviour('Excellent opinions detected. Extremely suspicious.')"><span class="emoji">📣</span>Excellent opinions</div>
+      <div class="tile" onclick="sarafBehaviour('Being deeply lovable has been recorded as a recurring issue.')"><span class="emoji">💖</span>Deeply lovable</div>
+      <div class="tile" onclick="sarafBehaviour('Main character behaviour confirmed.')"><span class="emoji">👑</span>Main character</div>
+    </div>
+    <div class="note" id="behaviourNote"></div>
+    <button onclick="nextPage(13)">Continue</button>
+  </div>
+</div>
+
+<div class="page" id="page13">
+  <div class="card">
+    <h2>💌 Letters For Saraf</h2>
+    <p>Some messages arrived for the birthday girl. Please open responsibly.</p>
+    <div class="grid">
+      <div class="tile" onclick="openNote('Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
+      <div class="tile" onclick="openNote('One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
+      <div class="tile" onclick="openNote('Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
+      <div class="tile" onclick="openNote('One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
+      <div class="tile" onclick="openNote('The birthday committee has completed its review. They have concluded that you deserve presents, attention, snacks and more attention.')"><span class="emoji">🎀</span>Birthday notice</div>
+      <div class="tile" onclick="openNote('Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
+      <div class="tile" onclick="openNote('Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
+      <div class="tile" onclick="openNote('I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
+    </div>
+    <div class="note" id="letterNote"></div>
+    <button onclick="nextPage(14)">Next birthday procedure</button>
+  </div>
+</div>
+
+<div class="page" id="page14">
   <div class="card">
     <h2>📊 Friendship Meter</h2>
     <p>Measuring friendship. Please stand dramatically.</p>
     <button onclick="startCounter()">MEASURE</button>
     <div class="counter" id="counter">?</div>
     <div class="note" id="counterNote"></div>
-    <button onclick="nextPage(13)">Proceed to crowning</button>
+    <button onclick="nextPage(15)">Proceed</button>
   </div>
 </div>
 
-<div class="page" id="page13">
-  <div class="certificate">
-    <h1>👑 OFFICIAL CERTIFICATE 👑</h1>
-    <p>This certifies that</p>
-    <h2>SARAF</h2>
-    <p>is loved more than she knows, appreciated more than she realises and has made the world significantly better simply by being in it.</p>
-    <p>Thank you for every laugh.</p>
-    <p>Thank you for every conversation.</p>
-    <p>Thank you for being you.</p>
-    <p>Thank you for existing.</p>
-    <p><b>Also, this friendship has a no-refunds policy.</b></p>
+<div class="page" id="page15">
+  <div class="card">
+    <h2>📸 Important Birthday Notice</h2>
+    <p>If anything in this website makes you laugh, smile, cry or question my sanity, please send me screenshots.</p>
+    <p>I spent an unreasonable amount of time making this and would like to be rewarded accordingly.</p>
+    <button onclick="nextPage(16)">I understand my duties</button>
+  </div>
+</div>
 
-    <button onclick="claimCake()">🍰 CLAIM BIRTHDAY CAKE 🍰</button>
+<div class="page" id="page16">
+  <div class="certificate">
+    <h1 class="cert-title">OFFICIAL CERTIFICATE OF EXTREME IMPORTANCE</h1>
+    <p>This certifies that</p>
+    <div class="cert-name">SARAF</div>
+    <p>has successfully completed all required Birthday Procedures and is hereby recognised as</p>
+    <h2>One Of Yasha's Favourite People On Earth</h2>
+    <div class="seal" id="certSeal">👑</div>
+    <div class="cert-list">
+      ⭐ Being a wonderful friend<br>
+      ⭐ Improving life simply by existing<br>
+      ⭐ Having excellent attendance throughout multiple life phases<br>
+      ⭐ Being deeply lovable<br>
+      ⭐ Accepting official birthday nonsense with grace
+    </div>
+    <p><b>Birthday Companion:</b> <span id="certAnimal">🐧 Penguin</span></p>
+    <p><b>Crown Status:</b> <span id="certCrown">Approved 👑</span></p>
+    <p><b>Friendship Status:</b> Permanent</p>
+    <p>Signed,</p>
+    <h2>Yasha</h2>
+    <p>President, Department of Birthday Affairs</p>
+    <button onclick="window.print()">Screenshot / Print Certificate</button>
+    <button onclick="nextPage(17)">Summon Birthday Parade 🎺</button>
+  </div>
+</div>
+
+<div class="page" id="page17">
+  <div class="card">
+    <h2>🎺 Animal Birthday Parade</h2>
+    <p>The birthday parade has arrived. Obviously.</p>
+    <button onclick="startParade()">START BIRTHDAY SONG 🎵</button>
+    <div class="paradeStage">
+      <div class="songBubble" id="songBubble">Ready when you are.</div>
+      <div class="paradeLine" id="paradeLine">🎺 🐧 🦦 🐥 🦭 🐰 🦆 🎈 👑 💖 🌈</div>
+    </div>
+    <button id="paradeNext" style="display:none" onclick="nextPage(18)">Final birthday thing</button>
+  </div>
+</div>
+
+<div class="page" id="page18">
+  <div class="card">
+    <h1>🎂 FINAL BIRTHDAY DEPLOYMENT 🎂</h1>
+    <p>The Department has reviewed your file.</p>
+    <p>It has concluded that a normal amount of celebration would be insufficient.</p>
+    <button onclick="claimCake()">DEPLOY FINAL BIRTHDAY CAKE</button>
     <div class="note" id="cakeNote"></div>
 
     <div class="finalCakeWrap" id="finalCakeWrap">
       <div class="bigCake">
-        <div style="font-size:3rem;">👑</div>
+        <div style="font-size:3rem;" id="cakeTopper">👑</div>
         <div class="candleRow">
           <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
           <div class="miniCandle"></div><div class="miniCandle"></div><div class="miniCandle"></div>
         </div>
         <div class="tier tier1">💖 ✨ 💖</div>
-        <div class="tier tier2">🌈 🎂 🌈</div>
-        <div class="tier tier3">⭐ 🎀 ⭐ 🎀 ⭐</div>
-        <div class="tier tier4">🍰 HAPPY BIRTHDAY 🍰</div>
+        <div class="tier tier2">🌈 HAPPY 🌈</div>
+        <div class="tier tier3">⭐ BIRTHDAY ⭐ SARAF ⭐</div>
+        <div class="tier tier4">🍰 VERY IMPORTANT CAKE 🍰</div>
       </div>
 
       <div class="finalText" id="finalText">
         <h1>HAPPY BIRTHDAY SARAF 💖</h1>
-        <p>Now please enjoy this completely impractical quantity of cake.</p>
-        <p>P.S. I wish I could have celebrated with you today. So this cake will have to do.</p>
+        <p>I love you very much.</p>
+        <p>Thank you for being one of my favourite people.</p>
+        <p>Have the best birthday.</p>
+        <p class="tiny">Website developed under severe emotional attachment.</p>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+const PASSWORD = "SARAFDAY";
+
+let companionEmoji = "🐧";
+let companionName = "Penguin";
+let crownGem = "💖";
+let crownDecor = "✨";
+let crownApproved = false;
+
 let blown = 0;
 let geoIndex = 0;
 let questionIndex = 0;
 let popped = 0;
 let collected = 0;
-let cakeGameStarted = false;
-const frogSpot = Math.floor(Math.random() * 4);
+let catchGameStarted = false;
+const hideSpot = Math.floor(Math.random() * 4);
 
 const questions = [
   {
@@ -606,13 +830,6 @@ const questions = [
       ["9", "Correct. We have reviewed your application and determined that adulthood is a scam.", true],
       ["Nine and a half", "Correct. Nine and a half is a very serious age.", true],
       ["Basically 9", "Correct. Basically 9. We reject all other information.", true]
-    ]
-  },
-  {
-    q: "Do you deserve cake?",
-    options: [
-      ["Yes", "Correct. Cake authorisation granted.", true],
-      ["Also yes", "Correct. Also yes. Obviously.", true]
     ]
   },
   {
@@ -648,27 +865,57 @@ const geoLines = [
   "But it does have significantly more confetti than I do."
 ];
 
+function checkPassword() {
+  const input = document.getElementById("passwordInput").value.trim().toUpperCase();
+  const note = document.getElementById("passwordNote");
+  note.style.display = "block";
+
+  if (input === PASSWORD) {
+    note.innerText = "Password accepted.\nBirthday access granted.\nPlease do not share classified birthday materials with unauthorised personnel.";
+    confetti(120);
+    setTimeout(() => nextPage(1), 900);
+  } else {
+    note.innerText = "Identity could not be verified.\nAre you sure you are Saraf?";
+    sparkleBurst();
+  }
+}
+
 function nextPage(num) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("page" + num).classList.add("active");
   window.scrollTo(0, 0);
-  confetti(30);
+  confetti(25);
   sparkleBurst();
 
-  if (num === 2) showQuestion();
-  if (num === 5) setupBalloonGame();
+  if (num === 3) showQuestion();
+  if (num === 7) setupBalloonGame();
+  if (num === 11) {
+    document.getElementById("hideSeekTitle").innerText = `${companionEmoji} Find Your Birthday Companion`;
+  }
+  if (num === 16) updateCertificate();
+  if (num === 18) document.getElementById("cakeTopper").innerText = companionEmoji + " 👑";
+}
+
+function chooseCompanion(emoji, name) {
+  companionEmoji = emoji;
+  companionName = name;
+  document.getElementById("companionBadge").style.display = "block";
+  document.getElementById("companionBadge").innerText = `${emoji} ✨`;
+  document.getElementById("companionNote").style.display = "block";
+  document.getElementById("companionNote").innerText = `Excellent choice.\n${name} is now legally responsible for your birthday experience.`;
+  document.getElementById("companionNext").style.display = "inline-block";
+  confetti(70);
 }
 
 function showQuestion() {
   const area = document.getElementById("questionArea");
   const msg = document.getElementById("checkMessage");
   const nextBtn = document.getElementById("nextQuestionBtn");
-  const cakeBtn = document.getElementById("cakeCeremonyBtn");
+  const checkNext = document.getElementById("checkNext");
 
   msg.style.display = "none";
   nextBtn.style.display = "none";
-  cakeBtn.style.display = "none";
-
+  checkNext.style.display = "none";
   document.getElementById("progressFill").style.width = ((questionIndex / questions.length) * 100) + "%";
 
   const current = questions[questionIndex];
@@ -689,17 +936,15 @@ function answerQuestion(text, correct) {
 
   if (!correct) {
     confetti(8);
-    sparkleBurst();
     return;
   }
 
   confetti(35);
-  sparkleBurst();
 
   if (questionIndex === questions.length - 1) {
     document.getElementById("progressFill").style.width = "100%";
-    document.getElementById("cakeCeremonyBtn").style.display = "inline-block";
-    msg.innerText = text + "\n\nBirthday status confirmed.\nCake eligibility confirmed.\nFavourite-person status confirmed.";
+    document.getElementById("checkNext").style.display = "inline-block";
+    msg.innerText = text + "\n\nBirthday status confirmed.\nFavourite-person status confirmed.\nProceeding with ceremony.";
   } else {
     document.getElementById("nextQuestionBtn").style.display = "inline-block";
   }
@@ -708,6 +953,28 @@ function answerQuestion(text, correct) {
 function nextQuestion() {
   questionIndex++;
   showQuestion();
+}
+
+function updateCrown() {
+  document.getElementById("crownPreview").innerText = `${crownDecor} ${crownGem} 👑 ${crownGem} ${crownDecor}`;
+}
+
+function setCrown(gem) {
+  crownGem = gem;
+  updateCrown();
+}
+
+function addDecor(decor) {
+  crownDecor = decor;
+  updateCrown();
+}
+
+function approveCrown() {
+  crownApproved = true;
+  document.getElementById("crownNote").style.display = "block";
+  document.getElementById("crownNote").innerText = "Crown approved.\nAuthority levels increasing.\nBirthday powers increased by 78%.";
+  document.getElementById("crownNext").style.display = "inline-block";
+  confetti(100);
 }
 
 function blowCandle(el) {
@@ -724,7 +991,6 @@ function blowCandle(el) {
     box.innerText = "⭐ Triple wish combo activated.\n\nBefore we continue...\nYou make my life brighter than you probably realise.\nSome people make days easier simply by existing.\nYou are one of those people for me.";
     document.getElementById("afterCandles").style.display = "inline-block";
     confetti(120);
-    sparkleBurst();
   }
 }
 
@@ -733,7 +999,6 @@ function geoNext() {
   if (geoIndex < geoLines.length) {
     text.innerText = geoLines[geoIndex];
     geoIndex++;
-    sparkleBurst();
   } else {
     document.getElementById("geoBtn").style.display = "inline-block";
     confetti(60);
@@ -745,20 +1010,18 @@ function setupBalloonGame() {
   document.getElementById("popCount").innerText = "Balloons popped: 0/5";
   document.getElementById("popNote").style.display = "none";
   document.getElementById("popNext").style.display = "none";
-
   const area = document.getElementById("popArea");
   area.innerHTML = "";
 
-  const balloons = ["🎈", "🎈", "🎈", "🎈", "🎈"];
-  balloons.forEach((b, i) => {
+  for (let i = 0; i < 5; i++) {
     const el = document.createElement("div");
     el.className = "popBalloon";
-    el.innerText = b;
+    el.innerText = "🎈";
     el.style.left = Math.random() * 75 + 8 + "%";
     el.style.top = Math.random() * 65 + 10 + "%";
     el.onclick = () => popBalloon(el);
     area.appendChild(el);
-  });
+  }
 }
 
 function popBalloon(el) {
@@ -766,94 +1029,77 @@ function popBalloon(el) {
   popped++;
   document.getElementById("popCount").innerText = `Balloons popped: ${popped}/5`;
   confetti(20);
-  sparkleBurst();
 
   if (popped >= 5) {
-    const note = document.getElementById("popNote");
-    note.style.display = "block";
-    note.innerText = "Excellent.\nBalloon destruction licence granted.";
+    document.getElementById("popNote").style.display = "block";
+    document.getElementById("popNote").innerText = "Excellent.\nBalloon destruction licence granted.";
     document.getElementById("popNext").style.display = "inline-block";
     confetti(80);
   }
 }
 
-function startCakeGame() {
-  if (cakeGameStarted) return;
-  cakeGameStarted = true;
+function startCatchGame() {
+  if (catchGameStarted) return;
+  catchGameStarted = true;
   collected = 0;
 
   const area = document.getElementById("catchArea");
-  const score = document.getElementById("cakeScore");
-  const note = document.getElementById("cakeGameNote");
-  const next = document.getElementById("cakeGameNext");
+  const score = document.getElementById("catchScore");
+  const note = document.getElementById("catchNote");
+  const next = document.getElementById("catchNext");
 
   area.innerHTML = "";
-  score.innerText = "Cake collected: 0/7";
+  score.innerText = "Sparkles collected: 0/7";
   note.style.display = "none";
   next.style.display = "none";
 
   let drops = 0;
   const interval = setInterval(() => {
     drops++;
-    const cake = document.createElement("div");
-    cake.className = "fallingCake";
-    cake.innerText = ["🍰", "🧁", "🎂"][Math.floor(Math.random() * 3)];
-    cake.style.left = Math.random() * 80 + 8 + "%";
-    cake.onclick = () => {
-      cake.remove();
+    const item = document.createElement("div");
+    item.className = "fallingItem";
+    item.innerText = ["✨", "⭐", "💖", "🎀"][Math.floor(Math.random() * 4)];
+    item.style.left = Math.random() * 80 + 8 + "%";
+    item.onclick = () => {
+      item.remove();
       collected++;
-      score.innerText = `Cake collected: ${collected}/7`;
+      score.innerText = `Sparkles collected: ${collected}/7`;
       confetti(12);
-      if (collected >= 7) finishCakeGame();
+      if (collected >= 7) finishCatchGame();
     };
-    area.appendChild(cake);
-    setTimeout(() => cake.remove(), 3100);
-
+    area.appendChild(item);
+    setTimeout(() => item.remove(), 3100);
     if (drops >= 15) clearInterval(interval);
   }, 520);
 
   setTimeout(() => {
-    if (collected < 7) finishCakeGame(true);
+    if (collected < 7) finishCatchGame(true);
   }, 9000);
 }
 
-function finishCakeGame(forced = false) {
-  cakeGameStarted = false;
-  const note = document.getElementById("cakeGameNote");
-  note.style.display = "block";
-
-  if (collected >= 7) {
-    note.innerText = "Congratulations.\nYou have successfully secured the national cake reserves.";
-  } else {
-    note.innerText = "Cake collection complete enough.\nThe birthday department is feeling generous today.";
-  }
-
-  document.getElementById("cakeGameNext").style.display = "inline-block";
+function finishCatchGame() {
+  catchGameStarted = false;
+  document.getElementById("catchNote").style.display = "block";
+  document.getElementById("catchNote").innerText = collected >= 7
+    ? "Excellent.\nSparkle reserves secured."
+    : "Sparkle collection complete enough.\nThe birthday department is feeling generous today.";
+  document.getElementById("catchNext").style.display = "inline-block";
   confetti(90);
-  sparkleBurst();
 }
 
-function findFrog(choice) {
-  const note = document.getElementById("frogNote");
+function birthdayBag() {
+  const items = [
+    "Found: one invisible tiara. Very exclusive.",
+    "Found: emergency glitter. Unfortunately it will never leave.",
+    "Found: one tiny emotional support " + companionName.toLowerCase() + ".",
+    "Found: main character energy.",
+    "Found: friendship letter. Suspiciously sentimental.",
+    "Found: crown insurance. Necessary."
+  ];
+  const note = document.getElementById("bagNote");
   note.style.display = "block";
-
-  if (choice === frogSpot) {
-    note.innerText = "🐸\nBirthday frog located.\nMorale increased by 37%.";
-    document.getElementById("frogNext").style.display = "inline-block";
-    confetti(90);
-  } else {
-    note.innerText = "No frog.\nVery disappointing.\nPlease continue the investigation.";
-    confetti(8);
-  }
-  sparkleBurst();
-}
-
-function moodPick(text) {
-  const note = document.getElementById("moodNote");
-  note.style.display = "block";
-  note.innerText = text;
-  confetti(35);
-  sparkleBurst();
+  note.innerText = items[Math.floor(Math.random() * items.length)];
+  confetti(50);
 }
 
 function spinWheel() {
@@ -861,7 +1107,7 @@ function spinWheel() {
   const note = document.getElementById("wheelNote");
   const outcomes = [
     "You have won: one birthday crown and unlimited attention.",
-    "You have won: cake rights for the entire day.",
+    "You have won: snack rights for the entire day.",
     "You have won: one dramatic entrance. Please use responsibly.",
     "You have won: compliments. Too many compliments. Legally concerning.",
     "You have won: best friend affection. Non-transferable."
@@ -875,24 +1121,28 @@ function spinWheel() {
     note.style.display = "block";
     note.innerText = outcomes[Math.floor(Math.random() * outcomes.length)];
     confetti(80);
-    sparkleBurst();
   }, 1200);
 }
 
-function giftMachine() {
-  const note = document.getElementById("giftNote");
-  const gifts = [
-    "Dispensing: one invisible tiara. Very exclusive.",
-    "Dispensing: emergency cake fork.",
-    "Dispensing: one tiny frog who believes in you. 🐸",
-    "Dispensing: free pass to be dramatic today.",
-    "Dispensing: one reminder that you are very loved.",
-    "Dispensing: birthday glitter. It will never leave."
-  ];
+function findCompanion(choice) {
+  const note = document.getElementById("hideNote");
   note.style.display = "block";
-  note.innerText = gifts[Math.floor(Math.random() * gifts.length)];
-  confetti(55);
-  sparkleBurst();
+
+  if (choice === hideSpot) {
+    note.innerText = `${companionEmoji}\n${companionName} located.\nMorale increased by 37%.`;
+    document.getElementById("hideNext").style.display = "inline-block";
+    confetti(90);
+  } else {
+    note.innerText = "No companion.\nVery disappointing.\nPlease continue the investigation.";
+    confetti(8);
+  }
+}
+
+function sarafBehaviour(text) {
+  const note = document.getElementById("behaviourNote");
+  note.style.display = "block";
+  note.innerText = text + "\nBehaviour logged.";
+  confetti(45);
 }
 
 function openNote(text) {
@@ -900,7 +1150,6 @@ function openNote(text) {
   note.style.display = "block";
   note.innerText = text;
   confetti(25);
-  sparkleBurst();
 }
 
 function startCounter() {
@@ -918,9 +1167,62 @@ function startCounter() {
       note.style.display = "block";
       note.innerText = "Friendship exceeds measuring equipment.";
       confetti(90);
-      sparkleBurst();
     }
   }, 330);
+}
+
+function updateCertificate() {
+  document.getElementById("certAnimal").innerText = `${companionEmoji} ${companionName}`;
+  document.getElementById("certCrown").innerText = crownApproved ? `Approved ${crownDecor} ${crownGem} 👑` : "Approved 👑";
+  document.getElementById("certSeal").innerText = `${crownGem}👑`;
+}
+
+function startParade() {
+  const line = document.getElementById("paradeLine");
+  const bubble = document.getElementById("songBubble");
+  line.innerText = `🎺 ${companionEmoji} 🐧 🦦 🐥 🦭 🐰 🦆 🎈 👑 💖 🌈`;
+  line.classList.remove("marching");
+  void line.offsetWidth;
+  line.classList.add("marching");
+
+  const words = ["HAP", "PY", "BIRTH", "DAY", "SA", "RAF", "💖"];
+  let i = 0;
+  const interval = setInterval(() => {
+    bubble.innerText = words[i] || "HAPPY BIRTHDAY SARAF 💖";
+    i++;
+    if (i > words.length) clearInterval(interval);
+  }, 650);
+
+  playBirthdayTune();
+  confetti(200);
+  setTimeout(() => {
+    document.getElementById("paradeNext").style.display = "inline-block";
+  }, 7000);
+}
+
+function playBirthdayTune() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  const ctx = new AudioContext();
+  const notes = [
+    264,264,297,264,352,330,
+    264,264,297,264,396,352,
+    264,264,528,440,352,330,297,
+    466,466,440,352,396,352
+  ];
+  notes.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = freq;
+    osc.type = "triangle";
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.22);
+    gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + i * 0.22 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.22 + 0.18);
+    osc.start(ctx.currentTime + i * 0.22);
+    osc.stop(ctx.currentTime + i * 0.22 + 0.2);
+  });
 }
 
 function claimCake() {
@@ -929,18 +1231,16 @@ function claimCake() {
   const finalText = document.getElementById("finalText");
 
   note.style.display = "block";
-  note.innerText = "Cake successfully claimed.\n\nPlease stand by.\nRetrieving birthday cake...\n\nUnexpected amount of cake detected.\nAdjusting...";
+  note.innerText = "Birthday finale loading...\n\nUnexpected amount of celebration detected.\nAdjusting...";
 
   setTimeout(() => {
     cake.style.display = "block";
     confetti(230);
-    sparkleBurst();
   }, 900);
 
   setTimeout(() => {
     finalText.style.display = "block";
     confetti(270);
-    sparkleBurst();
   }, 1700);
 }
 
@@ -979,7 +1279,7 @@ function balloons() {
     b.style.animationDuration = (Math.random() * 5 + 6) + "s";
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 10000);
-  }, 1300);
+  }, 1400);
 }
 
 balloons();

@@ -8,14 +8,18 @@
 <style>
 :root {
   --pink: #ff4fa3;
-  --dark-pink: #d63384;
-  --cream: #fff7eb;
+  --hot-pink: #ff2f93;
+  --dark-pink: #c92779;
+  --cream: #fff8ef;
+  --paper: #fffdf8;
   --lavender: #bfa2ff;
   --blue: #a8ddff;
   --gold: #ffd166;
-  --ink: #392044;
-  --soft-pink: #ffe1f0;
+  --deep-gold: #b98513;
+  --ink: #3b2347;
+  --soft-pink: #ffe3f1;
   --white: #ffffff;
+  --shadow: rgba(59, 35, 71, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -26,69 +30,86 @@ body {
   font-family: "Trebuchet MS", "Comic Sans MS", cursive;
   color: var(--ink);
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 79, 163, 0.22), transparent 24%),
-    radial-gradient(circle at 88% 12%, rgba(191, 162, 255, 0.25), transparent 24%),
-    radial-gradient(circle at 18% 88%, rgba(168, 221, 255, 0.28), transparent 24%),
-    linear-gradient(135deg, #fff7eb, #ffe1f0, #f3edff);
+    radial-gradient(circle at 12% 16%, rgba(255, 79, 163, 0.18), transparent 26%),
+    radial-gradient(circle at 85% 12%, rgba(191, 162, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 20% 88%, rgba(168, 221, 255, 0.25), transparent 28%),
+    linear-gradient(135deg, #fff8ef, #ffe4f2 45%, #f4eeff);
   overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1.5px);
+  background-size: 34px 34px;
+  opacity: 0.45;
 }
 
 .page {
   display: none;
   min-height: 100vh;
-  padding: 28px 16px;
+  padding: 30px 16px;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow-y: auto;
+  position: relative;
 }
 
 .page.active { display: flex; }
 
 .card {
-  width: min(860px, 100%);
-  background: rgba(255,255,255,0.92);
-  border: 3px solid rgba(255, 79, 163, 0.35);
-  border-radius: 34px;
-  padding: 34px 26px;
-  box-shadow: 0 22px 50px rgba(57, 32, 68, 0.16);
+  width: min(900px, 100%);
+  background: rgba(255,255,255,0.86);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 38px;
+  padding: 38px 28px;
+  box-shadow:
+    0 24px 55px var(--shadow),
+    inset 0 0 0 2px rgba(255, 79, 163, 0.18);
+  backdrop-filter: blur(10px);
   position: relative;
+  overflow: hidden;
 }
 
 .card::before {
-  content: "✦";
+  content: "";
   position: absolute;
-  top: 18px;
-  left: 22px;
-  color: var(--pink);
-  font-size: 1.4rem;
+  inset: 14px;
+  border: 2px dashed rgba(255, 79, 163, 0.28);
+  border-radius: 28px;
+  pointer-events: none;
 }
 
 .card::after {
   content: "✦";
   position: absolute;
-  bottom: 18px;
-  right: 22px;
-  color: var(--lavender);
-  font-size: 1.4rem;
+  right: 26px;
+  top: 20px;
+  color: var(--gold);
+  font-size: 1.7rem;
 }
 
 h1 {
-  font-size: clamp(2.4rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 8vw, 5.2rem);
   margin: 0 0 14px;
   color: var(--pink);
-  letter-spacing: -1px;
+  letter-spacing: -1.4px;
+  text-shadow: 0 3px 0 rgba(255, 209, 102, 0.45);
 }
 
 h2 {
-  font-size: clamp(1.8rem, 6vw, 3rem);
-  color: #7b4ad9;
-  margin: 0 0 14px;
+  font-size: clamp(1.85rem, 6vw, 3rem);
+  color: #7c4bd8;
+  margin: 0 0 16px;
 }
 
 p {
   font-size: 1.18rem;
-  line-height: 1.48;
+  line-height: 1.5;
 }
 
 .tiny {
@@ -100,20 +121,22 @@ button {
   font-family: inherit;
   border: none;
   border-radius: 999px;
-  padding: 14px 24px;
+  padding: 14px 25px;
   margin: 9px;
   font-size: 1.02rem;
-  font-weight: 800;
+  font-weight: 900;
   cursor: pointer;
   color: white;
-  background: var(--pink);
-  box-shadow: 0 7px 0 var(--dark-pink);
-  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+  background: linear-gradient(180deg, var(--pink), var(--hot-pink));
+  box-shadow:
+    0 7px 0 var(--dark-pink),
+    0 14px 22px rgba(255, 79, 163, 0.22);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
 }
 
 button:hover {
   transform: translateY(-3px);
-  background: #ff2f93;
+  filter: brightness(1.04);
 }
 
 button:active {
@@ -123,48 +146,58 @@ button:active {
 
 .primary {
   background: linear-gradient(135deg, var(--pink), var(--lavender));
-  box-shadow: 0 7px 0 #8b5bd6;
+  box-shadow:
+    0 7px 0 #8b5bd6,
+    0 14px 24px rgba(139, 91, 214, 0.22);
 }
 
 .secondary {
   background: white;
   color: var(--pink);
-  border: 2px solid var(--pink);
-  box-shadow: 0 6px 0 var(--soft-pink);
+  border: 2px solid var(--soft-pink);
+  box-shadow:
+    0 6px 0 #ffd1e7,
+    0 12px 18px rgba(255, 79, 163, 0.12);
 }
 
 input {
-  width: min(90%, 360px);
+  width: min(90%, 370px);
   border: 3px solid var(--soft-pink);
   border-radius: 999px;
-  padding: 15px 20px;
-  font-size: 1.1rem;
+  padding: 15px 22px;
+  font-size: 1.12rem;
   text-align: center;
   outline: none;
   color: var(--ink);
+  background: white;
+  box-shadow: inset 0 3px 8px rgba(59,35,71,0.06);
 }
 
-input:focus { border-color: var(--pink); }
+input:focus {
+  border-color: var(--pink);
+}
 
 .note {
   display: none;
-  margin: 20px auto 0;
-  padding: 18px 20px;
-  max-width: 650px;
-  background: var(--cream);
+  margin: 22px auto 0;
+  padding: 18px 21px;
+  max-width: 670px;
+  background: linear-gradient(180deg, #fffdf6, #fff6dc);
   border: 2px solid var(--gold);
-  border-radius: 22px;
+  border-radius: 24px;
   white-space: pre-line;
   font-size: 1.13rem;
+  box-shadow: 0 12px 24px rgba(185,133,19,0.12);
 }
 
 .progress {
   height: 24px;
-  background: #f5eafd;
+  background: #f4eaff;
   border-radius: 999px;
   overflow: hidden;
   margin: 18px auto;
   max-width: 560px;
+  border: 1px solid rgba(124,75,216,0.15);
 }
 
 .progress-fill {
@@ -177,35 +210,55 @@ input:focus { border-color: var(--pink); }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-  gap: 16px;
-  margin-top: 22px;
+  gap: 18px;
+  margin-top: 24px;
 }
 
 .tile {
-  background: white;
+  background: linear-gradient(180deg, white, #fff8fc);
   border: 2px solid var(--soft-pink);
   border-radius: 24px;
   padding: 18px 10px;
-  min-height: 120px;
+  min-height: 122px;
   cursor: pointer;
-  box-shadow: 0 9px 0 #ffd4e8;
+  box-shadow:
+    0 9px 0 #ffd4e8,
+    0 16px 22px rgba(59,35,71,0.08);
   transition: transform 0.16s ease, box-shadow 0.16s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .tile:hover {
   transform: translateY(-6px);
-  box-shadow: 0 13px 0 #ffd4e8;
+  box-shadow:
+    0 13px 0 #ffd4e8,
+    0 22px 28px rgba(59,35,71,0.11);
 }
 
 .tile.opened {
-  background: #fff7fb;
+  background: linear-gradient(180deg, #fffdf6, #fff3d7);
   border-color: var(--gold);
+}
+
+.envelope-tile::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 48%;
+  background: linear-gradient(135deg, rgba(255,79,163,0.16), rgba(191,162,255,0.18));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  pointer-events: none;
 }
 
 .emoji {
   display: block;
   font-size: 2.7rem;
   margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .music-pill {
@@ -213,11 +266,11 @@ input:focus { border-color: var(--pink); }
   top: 14px;
   right: 14px;
   z-index: 50;
-  background: white;
-  border: 2px solid var(--pink);
+  background: rgba(255,255,255,0.92);
+  border: 2px solid var(--soft-pink);
   border-radius: 999px;
-  padding: 8px 12px;
-  box-shadow: 0 6px 18px rgba(57, 32, 68, 0.12);
+  padding: 8px 13px;
+  box-shadow: 0 8px 20px rgba(57, 32, 68, 0.12);
   font-size: 0.9rem;
   display: none;
 }
@@ -225,10 +278,10 @@ input:focus { border-color: var(--pink); }
 .floating {
   position: fixed;
   bottom: -80px;
-  font-size: 2.6rem;
+  font-size: 2.45rem;
   pointer-events: none;
   animation: floatUp 9s linear forwards;
-  opacity: 0.8;
+  opacity: 0.75;
   z-index: 0;
 }
 
@@ -274,10 +327,10 @@ input:focus { border-color: var(--pink); }
   bottom: 0;
   width: 100%;
   height: 118px;
-  background: var(--pink);
+  background: linear-gradient(180deg, #ff7abb, var(--pink));
   border-radius: 24px 24px 38px 38px;
   border: 6px solid white;
-  box-shadow: inset 0 -16px #e7358c;
+  box-shadow: inset 0 -16px #e7358c, 0 16px 30px rgba(255,79,163,0.18);
 }
 
 .cake-top {
@@ -286,7 +339,7 @@ input:focus { border-color: var(--pink); }
   left: 30px;
   width: 230px;
   height: 64px;
-  background: var(--cream);
+  background: linear-gradient(180deg, #fffdf8, var(--cream));
   border-radius: 30px;
   border: 6px solid white;
 }
@@ -300,6 +353,7 @@ input:focus { border-color: var(--pink); }
   border-radius: 10px;
   cursor: pointer;
   z-index: 4;
+  box-shadow: 0 4px 10px rgba(59,35,71,0.12);
 }
 
 .candle:nth-child(1) { left: 76px; }
@@ -330,10 +384,13 @@ input:focus { border-color: var(--pink); }
   position: relative;
   height: 330px;
   border: 2px dashed var(--lavender);
-  border-radius: 28px;
-  background: rgba(255,255,255,0.55);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8), transparent 25%),
+    rgba(255,255,255,0.6);
   overflow: hidden;
   margin-top: 20px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.55);
 }
 
 .popBalloon {
@@ -341,6 +398,7 @@ input:focus { border-color: var(--pink); }
   font-size: 3rem;
   cursor: pointer;
   animation: bob 1.2s infinite alternate;
+  filter: drop-shadow(0 8px 8px rgba(59,35,71,0.12));
 }
 
 @keyframes bob {
@@ -348,17 +406,19 @@ input:focus { border-color: var(--pink); }
 }
 
 .wheel {
-  width: 230px;
-  height: 230px;
+  width: 238px;
+  height: 238px;
   border-radius: 50%;
   margin: 25px auto;
-  border: 8px solid white;
+  border: 9px solid white;
   background: conic-gradient(var(--pink), var(--gold), var(--blue), var(--lavender), var(--pink));
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 4rem;
-  box-shadow: 0 14px 30px rgba(57,32,68,0.2);
+  box-shadow:
+    0 16px 35px rgba(57,32,68,0.2),
+    inset 0 0 0 6px rgba(255,255,255,0.45);
 }
 
 .spin { animation: spinWheel 1.2s ease-out; }
@@ -376,18 +436,42 @@ input:focus { border-color: var(--pink); }
 }
 
 .certificate {
-  width: min(940px, 100%);
-  background: #fffdf7;
-  border: 12px double #c58b00;
-  border-radius: 16px;
-  padding: 38px 26px;
-  box-shadow: 0 0 0 8px #fff2bf, 0 20px 50px rgba(57,32,68,0.22);
+  width: min(960px, 100%);
+  background:
+    linear-gradient(180deg, #fffdf7, #fff8e8);
+  border: 12px double var(--deep-gold);
+  border-radius: 18px;
+  padding: 42px 28px;
+  box-shadow:
+    0 0 0 8px #fff2bf,
+    0 22px 50px rgba(57,32,68,0.22);
+  position: relative;
+}
+
+.certificate::before,
+.certificate::after {
+  content: "❦";
+  position: absolute;
+  color: var(--deep-gold);
+  font-size: 2.2rem;
+}
+
+.certificate::before {
+  top: 16px;
+  left: 20px;
+}
+
+.certificate::after {
+  bottom: 16px;
+  right: 20px;
+  transform: rotate(180deg);
 }
 
 .cert-title {
   color: #7b4ad9;
   font-size: clamp(2rem, 6vw, 4rem);
   margin-bottom: 18px;
+  text-shadow: none;
 }
 
 .cert-name {
@@ -396,7 +480,7 @@ input:focus { border-color: var(--pink); }
   font-weight: 900;
   display: inline-block;
   padding: 0 30px 8px;
-  border-bottom: 4px solid #c58b00;
+  border-bottom: 4px solid var(--deep-gold);
   margin: 5px 0 12px;
 }
 
@@ -409,32 +493,51 @@ input:focus { border-color: var(--pink); }
 }
 
 .seal {
-  width: 120px;
-  height: 120px;
+  width: 126px;
+  height: 126px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff6b8, var(--gold), #c58b00);
-  border: 5px solid #a66a00;
+  background:
+    radial-gradient(circle at 35% 30%, #fff9ca, var(--gold), var(--deep-gold));
+  border: 5px solid #9c6a0f;
   margin: 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
   transform: rotate(-8deg);
+  box-shadow: 0 12px 20px rgba(185,133,19,0.22);
 }
 
 .paradeStage {
-  height: 230px;
-  border: 2px dashed var(--pink);
-  border-radius: 28px;
-  background: rgba(255,255,255,0.65);
+  height: 250px;
+  border: 2px solid rgba(255,79,163,0.35);
+  border-radius: 30px;
+  background:
+    linear-gradient(90deg, rgba(255,79,163,0.2), transparent 12%, transparent 88%, rgba(255,79,163,0.2)),
+    linear-gradient(180deg, #fff8fb, #f3edff);
   overflow: hidden;
   position: relative;
-  margin-top: 20px;
+  margin-top: 22px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.75);
 }
+
+.paradeStage::before,
+.paradeStage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 70px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--pink), #ff86c4);
+  z-index: 1;
+}
+
+.paradeStage::before { left: 0; }
+.paradeStage::after { right: 0; }
 
 .songBubble {
   position: absolute;
-  top: 22px;
+  top: 24px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--cream);
@@ -442,14 +545,17 @@ input:focus { border-color: var(--pink); }
   border-radius: 999px;
   padding: 12px 22px;
   font-size: 1.25rem;
+  z-index: 2;
+  box-shadow: 0 10px 18px rgba(185,133,19,0.12);
 }
 
 .paradeLine {
   position: absolute;
   left: -880px;
-  top: 88px;
+  top: 100px;
   font-size: 3rem;
   white-space: nowrap;
+  z-index: 2;
 }
 
 .marching { animation: march 9s linear forwards; }
@@ -471,8 +577,8 @@ input:focus { border-color: var(--pink); }
 
 .bigCake {
   margin: auto;
-  width: min(92vw, 520px);
-  filter: drop-shadow(0 14px 18px rgba(57,32,68,0.18));
+  width: min(92vw, 540px);
+  filter: drop-shadow(0 16px 20px rgba(57,32,68,0.18));
 }
 
 .candleRow {
@@ -506,20 +612,21 @@ input:focus { border-color: var(--pink); }
 
 .tier {
   margin: auto;
-  height: 70px;
+  height: 72px;
   border: 6px solid white;
-  border-radius: 28px;
+  border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.55rem;
   font-weight: 900;
+  box-shadow: inset 0 -12px rgba(57,32,68,0.05);
 }
 
-.tier1 { width: 48%; background: #ffd6e8; }
-.tier2 { width: 68%; background: #d9caff; }
-.tier3 { width: 84%; background: #d8f0ff; }
-.tier4 { width: 100%; background: #fff0b8; }
+.tier1 { width: 48%; background: linear-gradient(180deg, #ffe5f2, #ffd0e6); }
+.tier2 { width: 68%; background: linear-gradient(180deg, #eee6ff, #d8c9ff); }
+.tier3 { width: 84%; background: linear-gradient(180deg, #e5f5ff, #cdeeff); }
+.tier4 { width: 100%; background: linear-gradient(180deg, #fff5ca, #ffe7a3); }
 
 .finalText {
   display: none;
@@ -534,6 +641,7 @@ input:focus { border-color: var(--pink); }
 
 @media print {
   body { background: white; }
+  body::before { display: none; }
   .page { display: none !important; }
   #page10 { display: flex !important; padding: 0; }
   .certificate { box-shadow: none; width: 100%; border-radius: 0; }
@@ -541,10 +649,12 @@ input:focus { border-color: var(--pink); }
 }
 
 @media (max-width: 560px) {
-  .card, .certificate { padding: 24px 18px; }
+  .card, .certificate { padding: 25px 18px; }
   button { width: 90%; }
   .pop-area { height: 310px; }
-  .tier { height: 60px; font-size: 1.2rem; }
+  .tier { height: 60px; font-size: 1.16rem; }
+  .paradeStage::before,
+  .paradeStage::after { width: 38px; }
 }
 </style>
 </head>
@@ -637,14 +747,14 @@ input:focus { border-color: var(--pink); }
     <p>Please open responsibly.</p>
 
     <div class="grid">
-      <div class="tile" onclick="openNote(this, 'Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
-      <div class="tile" onclick="openNote(this, 'One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
-      <div class="tile" onclick="openNote(this, 'Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
-      <div class="tile" onclick="openNote(this, 'One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
-      <div class="tile" onclick="openNote(this, 'The birthday committee has completed its review. They have concluded that you deserve presents, attention, snacks and more attention.')"><span class="emoji">🎀</span>Birthday notice</div>
-      <div class="tile" onclick="openNote(this, 'Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
-      <div class="tile" onclick="openNote(this, 'Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
-      <div class="tile" onclick="openNote(this, 'I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'Fact: You are one of my favourite people. I checked. It is true.')"><span class="emoji">💌</span>Open for a fact</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'One of the things I like most about you is how easy you are to talk to. Which is unfortunate because now I never shut up.')"><span class="emoji">💛</span>Need a compliment?</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'Just popping in to remind you that I love you very much. Right. Carry on.')"><span class="emoji">💖</span>Emergency affection</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'One of my favourite things about you is that you have somehow become part of every version of my life. Honestly, excellent attendance.')"><span class="emoji">🩵</span>Best friend reasons</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'The birthday committee has completed its review. They have concluded that you deserve presents, attention, snacks and more attention.')"><span class="emoji">🎀</span>Birthday notice</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'Okay. Real talk for approximately five seconds. You make my life happier. Thank you for that. Right. Enough sincerity. Go open another envelope.')"><span class="emoji">👑</span>Highly confidential</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'Wish I was there. Instead you are getting a website and an alarming amount of confetti.')"><span class="emoji">🌎</span>Open if dramatic</div>
+      <div class="tile envelope-tile" onclick="openNote(this, 'I hope today is full of people reminding you how loved you are. Starting with me.')"><span class="emoji">⭐</span>Birthday magic</div>
     </div>
 
     <div class="note" id="letterNote"></div>
@@ -759,449 +869,3 @@ input:focus { border-color: var(--pink); }
     </div>
   </div>
 </div>
-
-<script>
-const PASSWORD = "SARAFDAY";
-
-let questionIndex = 0;
-let blown = 0;
-let geoIndex = 0;
-let popped = 0;
-let audioCtx = null;
-let musicStarted = false;
-let musicTimer = null;
-
-const questions = [
-  {
-    q: "How old are you today?",
-    options: [
-      ["9", "Correct. We have reviewed your application and determined that adulthood is a scam.", true],
-      ["Nine and a half", "Correct. Nine and a half is a very serious age.", true],
-      ["Basically 9", "Correct. Basically 9. We reject all other information.", true]
-    ]
-  },
-  {
-    q: "What is Saraf?",
-    options: [
-      ["A friend", "Incorrect. Please read the question carefully and try again.", false],
-      ["A best friend", "Correct. The committee is pleased with this answer.", true],
-      ["One of my favourite people on earth", "Also correct. In fact, this may be the most correct answer available.", true]
-    ]
-  },
-  {
-    q: "How many presents should Saraf receive?",
-    options: [
-      ["Many", "Excellent. You clearly understand the assignment.", true],
-      ["More than many", "Correct. This is the responsible answer.", true],
-      ["An irresponsible amount", "Correct. Finally, someone sensible.", true]
-    ]
-  },
-  {
-    q: "Are you prepared to receive an alarming amount of birthday affection today?",
-    options: [
-      ["Yes", "Thank you. The birthday department appreciates your cooperation.", true],
-      ["Absolutely", "Correct. Very brave of you.", true],
-      ["I suppose", "Accepted, but with concern.", true]
-    ]
-  }
-];
-
-const geoLines = [
-  "So instead you are receiving this website.",
-  "It is essentially a digital birthday card that got wildly out of hand.",
-  "It is not as good as being there.",
-  "But it does have significantly more confetti than I do."
-];
-
-function getAudio() {
-  if (!audioCtx) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return null;
-    audioCtx = new AudioContext();
-  }
-  return audioCtx;
-}
-
-function tone(freq, start, duration, volume = 0.08, type = "triangle") {
-  const ctx = getAudio();
-  if (!ctx) return;
-
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-
-  osc.type = type;
-  osc.frequency.value = freq;
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  gain.gain.setValueAtTime(0.0001, ctx.currentTime + start);
-  gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + start + 0.02);
-  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + duration);
-
-  osc.start(ctx.currentTime + start);
-  osc.stop(ctx.currentTime + start + duration + 0.03);
-}
-
-function soundChime() {
-  tone(659, 0, 0.13, 0.06);
-  tone(880, 0.09, 0.16, 0.05);
-}
-
-function soundBoop() {
-  tone(220, 0, 0.12, 0.06, "sine");
-}
-
-function soundTwinkle() {
-  tone(784, 0, 0.12, 0.05);
-  tone(1046, 0.08, 0.16, 0.05);
-  tone(1318, 0.18, 0.18, 0.045);
-}
-
-function startBackgroundMusic() {
-  if (musicStarted) return;
-  const ctx = getAudio();
-  if (!ctx) return;
-
-  musicStarted = true;
-  document.getElementById("musicPill").style.display = "block";
-  document.getElementById("musicPill").innerText = "music: on";
-
-  const melody = [
-    392, 440, 523, 440,
-    392, 330, 392, 440,
-    523, 587, 523, 440,
-    392, 440, 392
-  ];
-
-  function playLoop() {
-    melody.forEach((freq, i) => {
-      tone(freq, i * 0.28, 0.20, 0.035, "triangle");
-    });
-  }
-
-  playLoop();
-  musicTimer = setInterval(playLoop, melody.length * 280 + 1000);
-  confetti(80);
-  soundTwinkle();
-}
-
-function checkPassword() {
-  const input = document.getElementById("passwordInput").value.trim().toUpperCase();
-  const note = document.getElementById("passwordNote");
-  note.style.display = "block";
-
-  if (input === PASSWORD) {
-    note.innerText = "Password accepted.\nBirthday access granted.";
-    confetti(100);
-    soundChime();
-    setTimeout(() => nextPage(1), 800);
-  } else {
-    note.innerText = "Identity could not be verified.\nAre you sure you are Saraf?";
-    soundBoop();
-  }
-}
-
-function nextPage(num) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById("page" + num).classList.add("active");
-  window.scrollTo(0, 0);
-  confetti(18);
-  if (num !== 10) soundChime();
-
-  if (num === 2) showQuestion();
-  if (num === 5) setupBalloonGame();
-}
-
-function showQuestion() {
-  const area = document.getElementById("questionArea");
-  const msg = document.getElementById("checkMessage");
-  const nextBtn = document.getElementById("nextQuestionBtn");
-  const checkNext = document.getElementById("checkNext");
-
-  msg.style.display = "none";
-  nextBtn.style.display = "none";
-  checkNext.style.display = "none";
-  document.getElementById("progressFill").style.width = ((questionIndex / questions.length) * 100) + "%";
-
-  const current = questions[questionIndex];
-  area.innerHTML = `<p><b>${current.q}</b></p>`;
-
-  current.options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.innerText = opt[0];
-    btn.onclick = () => answerQuestion(opt[1], opt[2]);
-    area.appendChild(btn);
-  });
-}
-
-function answerQuestion(text, correct) {
-  const msg = document.getElementById("checkMessage");
-  msg.style.display = "block";
-  msg.innerText = text;
-
-  if (!correct) {
-    confetti(6);
-    soundBoop();
-    return;
-  }
-
-  confetti(35);
-  soundChime();
-
-  if (questionIndex === questions.length - 1) {
-    document.getElementById("progressFill").style.width = "100%";
-    document.getElementById("checkNext").style.display = "inline-block";
-    msg.innerText = text + "\n\nBirthday status confirmed.\nFavourite-person status confirmed.";
-  } else {
-    document.getElementById("nextQuestionBtn").style.display = "inline-block";
-  }
-}
-
-function nextQuestion() {
-  questionIndex++;
-  showQuestion();
-}
-
-function blowCandle(el) {
-  if (el.classList.contains("out")) return;
-  el.classList.add("out");
-  blown++;
-
-  const box = document.getElementById("candleMessage");
-  box.style.display = "block";
-  soundTwinkle();
-
-  if (blown === 1) box.innerText = "⭐ Wish received.";
-  if (blown === 2) box.innerText = "⭐ Extra wish received.";
-  if (blown === 3) {
-    box.innerText = "⭐ Triple wish combo activated.\n\nBefore we continue...\nYou make my life brighter than you probably realise.\nSome people make days easier simply by existing.\nYou are one of those people for me.";
-    document.getElementById("afterCandles").style.display = "inline-block";
-    confetti(120);
-  }
-}
-
-function geoNext() {
-  const text = document.getElementById("geoText");
-  if (geoIndex < geoLines.length) {
-    text.innerText = geoLines[geoIndex];
-    geoIndex++;
-    soundChime();
-  } else {
-    document.getElementById("geoBtn").style.display = "inline-block";
-    confetti(50);
-    soundTwinkle();
-  }
-}
-
-function setupBalloonGame() {
-  popped = 0;
-  document.getElementById("popCount").innerText = "Balloons popped: 0/5";
-  document.getElementById("popNote").style.display = "none";
-  document.getElementById("popNext").style.display = "none";
-
-  const area = document.getElementById("popArea");
-  area.innerHTML = "";
-
-  for (let i = 0; i < 5; i++) {
-    const el = document.createElement("div");
-    el.className = "popBalloon";
-    el.innerText = "🎈";
-    el.style.left = Math.random() * 75 + 8 + "%";
-    el.style.top = Math.random() * 65 + 10 + "%";
-    el.onclick = () => popBalloon(el);
-    area.appendChild(el);
-  }
-}
-
-function popBalloon(el) {
-  el.remove();
-  popped++;
-  document.getElementById("popCount").innerText = `Balloons popped: ${popped}/5`;
-  confetti(15);
-  soundBoop();
-
-  if (popped >= 5) {
-    document.getElementById("popNote").style.display = "block";
-    document.getElementById("popNote").innerText = "Excellent.\nBalloon destruction licence granted.";
-    document.getElementById("popNext").style.display = "inline-block";
-    confetti(70);
-    soundTwinkle();
-  }
-}
-
-function openNote(tile, text) {
-  tile.classList.add("opened");
-  tile.querySelector(".emoji").innerText = "💖";
-  const note = document.getElementById("letterNote");
-  note.style.display = "block";
-  note.innerText = text;
-  confetti(20);
-  soundChime();
-}
-
-function spinWheel() {
-  const wheel = document.getElementById("wheel");
-  const note = document.getElementById("wheelNote");
-
-  const outcomes = [
-    "You have won: unlimited attention.",
-    "You have won: snack rights for the entire day.",
-    "You have won: one dramatic entrance. Please use responsibly.",
-    "You have won: compliments. Too many compliments. Legally concerning.",
-    "You have won: best friend affection. Non-transferable."
-  ];
-
-  wheel.classList.remove("spin");
-  void wheel.offsetWidth;
-  wheel.classList.add("spin");
-
-  soundTwinkle();
-
-  setTimeout(() => {
-    note.style.display = "block";
-    note.innerText = outcomes[Math.floor(Math.random() * outcomes.length)];
-    confetti(70);
-    soundChime();
-  }, 1200);
-}
-
-function startCounter() {
-  const nums = ["12%", "46%", "81%", "145%", "276%", "904%", "ERROR"];
-  let i = 0;
-  const counter = document.getElementById("counter");
-  const note = document.getElementById("counterNote");
-  note.style.display = "none";
-
-  const interval = setInterval(() => {
-    counter.innerText = nums[i];
-    tone(300 + i * 90, 0, 0.08, 0.04);
-    i++;
-    if (i >= nums.length) {
-      clearInterval(interval);
-      note.style.display = "block";
-      note.innerText = "Friendship exceeds measuring equipment.";
-      confetti(90);
-      soundTwinkle();
-    }
-  }, 330);
-}
-
-function startParade() {
-  const line = document.getElementById("paradeLine");
-  const bubble = document.getElementById("songBubble");
-
-  line.classList.remove("marching");
-  void line.offsetWidth;
-  line.classList.add("marching");
-
-  const words = ["HAP", "PY", "BIRTH", "DAY", "SA", "RAF", "💖"];
-  let i = 0;
-
-  const interval = setInterval(() => {
-    bubble.innerText = words[i] || "HAPPY BIRTHDAY SARAF";
-    i++;
-    if (i > words.length) clearInterval(interval);
-  }, 650);
-
-  playBirthdayTune();
-  confetti(160);
-
-  setTimeout(() => {
-    document.getElementById("paradeNext").style.display = "inline-block";
-  }, 9000);
-}
-
-function playBirthdayTune() {
-  const notes = [
-    262, 262, 294, 262, 349, 330,
-    262, 262, 294, 262, 392, 349,
-    262, 262, 523, 440, 349, 330, 294,
-    466, 466, 440, 349, 392, 349
-  ];
-
-  const durations = [
-    0.28, 0.18, 0.42, 0.42, 0.42, 0.75,
-    0.28, 0.18, 0.42, 0.42, 0.42, 0.75,
-    0.28, 0.18, 0.42, 0.42, 0.42, 0.42, 0.85,
-    0.28, 0.18, 0.42, 0.42, 0.42, 0.9
-  ];
-
-  let time = 0;
-
-  notes.forEach((freq, i) => {
-    tone(freq, time, durations[i], 0.12, "triangle");
-    time += durations[i] + 0.06;
-  });
-}
-
-function claimCake() {
-  const note = document.getElementById("cakeNote");
-  const cake = document.getElementById("finalCakeWrap");
-  const finalText = document.getElementById("finalText");
-
-  note.style.display = "block";
-  note.innerText = "Birthday finale loading...\n\nUnexpected amount of celebration detected.\nAdjusting...";
-
-  setTimeout(() => {
-    cake.style.display = "block";
-    confetti(200);
-    soundTwinkle();
-  }, 800);
-
-  setTimeout(() => {
-    finalText.style.display = "block";
-    confetti(240);
-    playBirthdayTune();
-  }, 1600);
-}
-
-function secretSparkle() {
-  confetti(130);
-  sparkleBurst(24);
-  soundTwinkle();
-}
-
-function confetti(count) {
-  const colors = ["#ff4fa3", "#ffd166", "#a8ddff", "#bfa2ff", "#ffffff"];
-  for (let i = 0; i < count; i++) {
-    const piece = document.createElement("div");
-    piece.classList.add("confetti");
-    piece.style.left = Math.random() * 100 + "vw";
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDuration = (Math.random() * 1.8 + 2.2) + "s";
-    document.body.appendChild(piece);
-    setTimeout(() => piece.remove(), 3500);
-  }
-}
-
-function sparkleBurst(count = 12) {
-  const icons = ["✨", "⭐", "💖", "🎀"];
-  for (let i = 0; i < count; i++) {
-    const s = document.createElement("div");
-    s.className = "sparkle-pop";
-    s.innerText = icons[Math.floor(Math.random() * icons.length)];
-    s.style.left = Math.random() * 100 + "vw";
-    s.style.top = Math.random() * 100 + "vh";
-    document.body.appendChild(s);
-    setTimeout(() => s.remove(), 1100);
-  }
-}
-
-function floatingDecor() {
-  const icons = ["🎈", "✨", "💖", "🎀", "⭐"];
-  setInterval(() => {
-    const el = document.createElement("div");
-    el.classList.add("floating");
-    el.innerText = icons[Math.floor(Math.random() * icons.length)];
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (Math.random() * 4 + 7) + "s";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 10000);
-  }, 1600);
-}
-
-floatingDecor();
-</script>
-
-</body>
-</html>
